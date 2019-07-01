@@ -1,16 +1,17 @@
 {
-  "name": "myshop",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app"
+    "start": "nodejs ./bin/www"
   },
-  "author": "Mircea Constantin",
-  "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "debug": "^4.1.1",
     "express": "^4.17.1",
-    "pug": "^2.0.4"
+    "morgan": "^1.9.1",
+    "pug": "^2.0.4",
+    "static-favicon": "~1.0.0"
   }
 }
