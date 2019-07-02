@@ -1,78 +1,16 @@
 extends ../layouts/layout.pug
 
 block content
-  div(class="row")
-    div(class="col-sm-6 col-md-4")
-      <div class="card" style="width: 16rem;">
-        <img src="https://store-images.s-microsoft.com/image/apps.18454.14425140369408817.31079f78-7ddb-48a1-bb62-355c82034fdd.cbc00080-ee71-485b-917c-b4f035e7cfea" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">State of decay 2</h5>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem a, non necessitatibus blanditiis repellat esse, odio nemo, sed accusantium neque harum quas quibusdam magni!</p>
-          div.clearfix
-            div.price.text-center 50$
-            <a href="#" class="btn btn-success float-right">Buy</a>
-            <a href="#" class="btn btn-secondary float-left">Details</a>
-        </div>
-      </div>
-    div(class="col-sm-6 col-md-4")    
-      <div class="card" style="width: 16rem;">
-      <img src="https://store-images.s-microsoft.com/image/apps.18454.14425140369408817.31079f78-7ddb-48a1-bb62-355c82034fdd.cbc00080-ee71-485b-917c-b4f035e7cfea" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">State of decay 2</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem a, non necessitatibus blanditiis repellat esse, odio nemo, sed accusantium neque harum quas quibusdam magni!</p>
-        div.clearfix
-          div.price 50$
-          <a href="#" class="btn btn-success float-right">Buy</a>
-          <a href="#" class="btn btn-secondary float-left">Details</a>
-      </div>
-      </div>
-    div(class="col-sm-6 col-md-4")    
-      <div class="card" style="width: 16rem;">
-      <img src="https://store-images.s-microsoft.com/image/apps.18454.14425140369408817.31079f78-7ddb-48a1-bb62-355c82034fdd.cbc00080-ee71-485b-917c-b4f035e7cfea" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">State of decay 2</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem a, non necessitatibus blanditiis repellat esse, odio nemo, sed accusantium neque harum quas quibusdam magni!</p>
-        div.clearfix
-          div.price 50$
-          <a href="#" class="btn btn-success float-right">Buy</a>
-          <a href="#" class="btn btn-secondary float-left">Details</a>
-      </div>
-      </div>
-
-  div(class="row")
-    div(class="col-sm-6 col-md-4")
-      <div class="card" style="width: 16rem;">
-        <img src="https://store-images.s-microsoft.com/image/apps.18454.14425140369408817.31079f78-7ddb-48a1-bb62-355c82034fdd.cbc00080-ee71-485b-917c-b4f035e7cfea" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">State of decay 2</h5>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem a, non necessitatibus blanditiis repellat esse, odio nemo, sed accusantium neque harum quas quibusdam magni!</p>
-          div.clearfix
-            div.price.text-center 50$
-            <a href="#" class="btn btn-success float-right">Buy</a>
-            <a href="#" class="btn btn-secondary float-left">Details</a>
-        </div>
-      </div>
-    div(class="col-sm-6 col-md-4")    
-      <div class="card" style="width: 16rem;">
-      <img src="https://store-images.s-microsoft.com/image/apps.18454.14425140369408817.31079f78-7ddb-48a1-bb62-355c82034fdd.cbc00080-ee71-485b-917c-b4f035e7cfea" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">State of decay 2</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem a, non necessitatibus blanditiis repellat esse, odio nemo, sed accusantium neque harum quas quibusdam magni!</p>
-        div.clearfix
-          div.price 50$
-          <a href="#" class="btn btn-success float-right">Buy</a>
-          <a href="#" class="btn btn-secondary float-left">Details</a>
-      </div>
-      </div>
-    div(class="col-sm-6 col-md-4")    
-      <div class="card" style="width: 16rem;">
-      <img src="https://store-images.s-microsoft.com/image/apps.18454.14425140369408817.31079f78-7ddb-48a1-bb62-355c82034fdd.cbc00080-ee71-485b-917c-b4f035e7cfea" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">State of decay 2</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem a, non necessitatibus blanditiis repellat esse, odio nemo, sed accusantium neque harum quas quibusdam magni!</p>
-        div.clearfix
-          div.price 50$
-          <a href="#" class="btn btn-success float-right">Buy</a>
-          <a href="#" class="btn btn-secondary float-left">Details</a>
-      </div>
-      </div>
+  div.container
+    div(class="row")
+      each product in products
+        div(class="col-sm-1 col-md-5")
+          div(class="card")
+            img(src= product.imagePath class="card-img-top" alt= product.title)
+            div(class="card-body")
+              h5(class="card-title") #{product.title}
+              p(class="card-text") #{product.description}
+              div.clearfix
+                div.price.text-center #{product.price}$
+                  a(href="#" class="btn btn-success float-right") Buy
+                  a(href="#" class="btn btn-secondary float-left") Details
