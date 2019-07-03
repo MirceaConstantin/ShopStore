@@ -1,10 +1,10 @@
 extends ../layouts/layout.pug
 
-block content
+block index
   div.container
     div(class="row")
       each product in products
-        div(class="col-sm-1 col-md-5")
+        div(class="col-sm-2 col-md-3")
           div(class="card")
             img(src= product.imagePath class="card-img-top" alt= product.title)
             div(class="card-body")

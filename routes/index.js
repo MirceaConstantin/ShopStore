@@ -12,12 +12,16 @@ router.get('/', function (req, res) {
     }
     res.render('shop/index', {
       title: 'Bazar',
-      products: docs,
-      key: req.query.key
-    });
+      products: docs
+    })
   });
 });
 
-
+router.get('/:id', function (req, res) {
+  res.render('details/detail', {
+    title: 'Details'
+  })
+  res.send(req.params.id)
+})
 
 module.exports = router;
