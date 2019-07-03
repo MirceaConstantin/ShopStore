@@ -12,5 +12,6 @@ block content
               p(class="card-text") #{product.description}
               div.clearfix
                 div.price.text-center #{product.price}$
+                  p= product._id
                   a(href="#" class="btn btn-success float-right") Buy
-                  a(href="#" class="btn btn-secondary float-left") Details
+                  a(href=`/${product._id}` class="btn btn-secondary float-left") Details

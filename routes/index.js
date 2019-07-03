@@ -12,10 +12,12 @@ router.get('/', function (req, res) {
     }
     res.render('shop/index', {
       title: 'Bazar',
-      products: docs
+      products: docs,
+      key: req.query.key
     });
   });
-
 });
+
+
 
 module.exports = router;

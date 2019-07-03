@@ -19,7 +19,7 @@ var products = [
     new Product({
         imagePath: 'https://ae01.alicdn.com/kf/HTB15IW6RVXXXXauXpXXq6xXFXXX1/2018-Game-God-of-War-4-Poster-T-shirts-Kratos-Atreus-Mens-Casual-Short-Sleeve-Cotton.jpg',
         title: 'God of War 4',
-        description: 'After hes wife dead, Kratos go ',
+        description: 'After hes wife dead, Kratos ... ',
         price: 60,
         quantity: false,
         genre: ['Action', 'Adventure'],

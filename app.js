@@ -4,17 +4,16 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var products = require('./seed/product-seeder')
 var routes = require('./routes/index');
+var mongoDB = require('mongoose');
 
 //23 si 25 Iulie (Soft Skills) la 19:00
 
 var app = express();
 
-app.use(products, function (res, req, next) {
-    console.log('Start');
-    next(products);
-})
+mongoDB.connect('mongodb+srv://adminShop:adminShop@myshopproducts-huk3f.mongodb.net/myShop', {
+    useNewUrlParser: true
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
