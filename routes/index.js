@@ -18,12 +18,17 @@ router.get('/', function (req, res) {
 });
 
 router.get('/details/:title', function (req, res) {
-
-  res.render('details/detail', {
-    title: 'Details',
-    product: //trebuie parcurs obiectul
+  Product.find(function (err, items) {
+    for (let i in items) {
+      if (items[i].title == req.params.title) {
+        res.render('details/detail', {
+          title: 'Details',
+          product: items[i]
+        })
+      }
+    }
   })
-})
+});
 
 router.get('/cart', function (req, res) {
   res.render('shop/cart', {
@@ -32,10 +37,19 @@ router.get('/cart', function (req, res) {
 })
 
 router.get('/admin', function (req, res) {
-  res.render('admin/admin', {
-    title: 'Admin'
-  })
-  res.send('admin page')
+  Product.find(function (err, docs) {
+    var productChunks = [];
+    var i = 0
+    for (i in docs) {
+      productChunks.push(docs[i])
+      console.log(docs[i])
+    }
+    res.render('admin/admin', {
+      title: 'Admin',
+      products: docs
+    })
+    console.log(productChunks[i])
+  });
 })
 
 module.exports = router;
