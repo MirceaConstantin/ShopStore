@@ -7,8 +7,10 @@ mongoDB.connect('mongodb+srv://adminShop:adminShop@myshopproducts-huk3f.mongodb.
 
 var products = [
     new Product({
-        imagePath: 'https://store-images.s-microsoft.com/image/apps.18454.14425140369408817.31079f78-7ddb-48a1-bb62-355c82034fdd.cbc00080-ee71-485b-917c-b4f035e7cfea',
         title: 'State of Decay 2',
+        imagePoster: 'https://store-images.s-microsoft.com/image/apps.18454.14425140369408817.31079f78-7ddb-48a1-bb62-355c82034fdd.cbc00080-ee71-485b-917c-b4f035e7cfea',
+        imagesSlider: [],
+        trailerGame: 'https://www.youtube.com/embed/qjLOFZjGClY',
         description: 'Survivel Game',
         price: 50,
         quantity: false,
@@ -17,8 +19,10 @@ var products = [
         stock: 300
     }),
     new Product({
-        imagePath: 'https://ae01.alicdn.com/kf/HTB15IW6RVXXXXauXpXXq6xXFXXX1/2018-Game-God-of-War-4-Poster-T-shirts-Kratos-Atreus-Mens-Casual-Short-Sleeve-Cotton.jpg',
         title: 'God of War 4',
+        imagePoster: 'https://ae01.alicdn.com/kf/HTB15IW6RVXXXXauXpXXq6xXFXXX1/2018-Game-God-of-War-4-Poster-T-shirts-Kratos-Atreus-Mens-Casual-Short-Sleeve-Cotton.jpg',
+        imagesSlider: [],
+        trailerGame: '',
         description: 'After hes wife dead, Kratos ... ',
         price: 60,
         quantity: false,
@@ -27,8 +31,10 @@ var products = [
         stock: 300
     }),
     new Product({
-        imagePath: 'https://images-na.ssl-images-amazon.com/images/I/B1AdYFp9vQS._SY445_.jpg',
         title: "Assassin's Creed Odyssey",
+        imagePoster: 'https://images-na.ssl-images-amazon.com/images/I/B1AdYFp9vQS._SY445_.jpg',
+        imagesSlider: [],
+        trailerGame: '',
         description: 'Find your true history',
         price: 55,
         quantity: false,
@@ -37,8 +43,10 @@ var products = [
         stock: 300
     }),
     new Product({
-        imagePath: 'https://cdn.cdkeys.com/500x706/media/catalog/product/w/o/worldwar-z.jpg',
         title: 'World War Z',
+        imagePoster: 'https://cdn.cdkeys.com/500x706/media/catalog/product/w/o/worldwar-z.jpg',
+        imagesSlider: [],
+        trailerGame: '',
         description: 'Survivel Game',
         price: 50,
         quantity: false,
@@ -47,8 +55,10 @@ var products = [
         stock: 300
     }),
     new Product({
-        imagePath: 'https://m.media-amazon.com/images/M/MV5BMTcyZjI5MzYtNGEyMC00NTNkLTgxZTktMmQ5MmIxNjRiYzg3XkEyXkFqcGdeQXVyNDIwOTkyNjM@._V1_UY268_CR14,0,182,268_AL_.jpg',
         title: 'Fifa 2019',
+        imagePoster: 'https://m.media-amazon.com/images/M/MV5BMTcyZjI5MzYtNGEyMC00NTNkLTgxZTktMmQ5MmIxNjRiYzg3XkEyXkFqcGdeQXVyNDIwOTkyNjM@._V1_UY268_CR14,0,182,268_AL_.jpg',
+        imagesSlider: [],
+        trailerGame: '',
         description: 'Football Game',
         price: 65,
         quantity: false,
@@ -57,8 +67,10 @@ var products = [
         stock: 300
     }),
     new Product({
-        imagePath: 'https://g2anewsprod02storage.s3.amazonaws.com/app/uploads/2018/11/PLAYERUNKNOWNS-BATTLEGROUNDS.jpg',
         title: "PlayerUnknown's Battlegrounds",
+        imagePoster: 'https://g2anewsprod02storage.s3.amazonaws.com/app/uploads/2018/11/PLAYERUNKNOWNS-BATTLEGROUNDS.jpg',
+        imagesSlider: [],
+        trailerGame: '',
         description: 'Battle royale',
         price: 65,
         quantity: false,

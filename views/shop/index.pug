@@ -4,14 +4,12 @@ block index
   div.container
     div(class="row")
       each product in products
-        div(class="col-sm-2 col-md-3")
+        div(class="col-sm-3 col-md-3")
           div(class="card")
             img(src= product.imagePath class="card-img-top" alt= product.title)
             div(class="card-body")
               h5(class="card-title") #{product.title}
-              p(class="card-text") #{product.description}
               div.clearfix
                 div.price.text-center #{product.price}$
-                  p= product._id
                   a(href="#" class="btn btn-success float-right") Buy
-                  a(href=`/${product._id}` class="btn btn-secondary float-left") Details
+                  a(href=`/details/${product.title}` class="btn btn-secondary float-left") Details

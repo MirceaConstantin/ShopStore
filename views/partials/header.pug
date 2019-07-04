@@ -1,6 +1,8 @@
 
 nav(class="navbar navbar-light bg-light")
-  a(class="navbar-brand" href="#") Bazar
+  a(class="navbar-brand" href="#") #{title}
   div(class="justify-content-end")
-    button(type="button" class="btn btn-success") <i class="fas fa-cart-plus"></i> Cart
-    button(type="button" class="ml-1 btn btn-dark") <i class="fas fa-unlock"></i> Admin 
+    a(href='/cart')
+      button(type="button" class="btn btn-success") <i class="fas fa-cart-plus"></i> Cart
+    a(href='/admin')
+      button( type="button" class="ml-1 btn btn-dark") <i class="fas fa-unlock"></i> Admin 

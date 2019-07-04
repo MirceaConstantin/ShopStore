@@ -11,17 +11,36 @@ router.get('/', function (req, res) {
       productChunks.push(docs.slice(i, i + chunkSize))
     }
     res.render('shop/index', {
-      title: 'Bazar',
+      title: 'Bazarul de joaca',
       products: docs
     })
   });
 });
 
-router.get('/:id', function (req, res) {
+router.get('/details/:title', function (req, res) {
+  let productDetails = {
+    title: req.params.title,
+    image: req.params.imagePoster,
+    description: req.params.description,
+    genre: req.params.genre
+  }
   res.render('details/detail', {
-    title: 'Details'
+    title: 'Details',
+    product: productDetails
   })
-  res.send(req.params.id)
+})
+
+router.get('/cart', function (req, res) {
+  res.render('shop/cart', {
+    title: 'Cart'
+  })
+})
+
+router.get('/admin', function (req, res) {
+  res.render('admin/admin', {
+    title: 'Admin'
+  })
+  res.send('admin page')
 })
 
 module.exports = router;
