@@ -18,15 +18,10 @@ router.get('/', function (req, res) {
 });
 
 router.get('/details/:title', function (req, res) {
-  let productDetails = {
-    title: req.params.title,
-    image: req.params.imagePoster,
-    description: req.params.description,
-    genre: req.params.genre
-  }
+
   res.render('details/detail', {
     title: 'Details',
-    product: productDetails
+    product: //trebuie parcurs obiectul
   })
 })
 

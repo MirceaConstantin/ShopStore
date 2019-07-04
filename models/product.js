@@ -2,11 +2,19 @@ var mongoDB = require('mongoose');
 var Schema = mongoDB.Schema;
 
 var schema = new Schema({
-    imagePath: {
+    title: {
         type: String,
         required: true
     },
-    title: {
+    imagePoster: {
+        type: String,
+        required: true
+    },
+    imagesSlider: {
+        type: Array,
+        required: true
+    },
+    trailerGame: {
         type: String,
         required: true
     },
@@ -18,20 +26,16 @@ var schema = new Schema({
         type: Number,
         required: true
     },
-    quantity: {
-        type: Number,
-        required: true
-    },
-    stock: {
-        type: Number,
-        required: true
-    },
     genre: {
-        type: [],
+        type: Array,
         required: true
     },
     platform: {
         type: [],
+        required: true
+    },
+    stock: {
+        type: Number,
         required: true
     }
 });

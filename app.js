@@ -11,7 +11,7 @@ var mongoDB = require('mongoose');
 
 var app = express();
 
-mongoDB.connect('mongodb+srv://adminShop:adminShop@myshopproducts-huk3f.mongodb.net/myShop', {
+mongoDB.connect('mongodb+srv://shopAdmin:shopAdmin@myshopproducts-huk3f.mongodb.net/myShop', {
     useNewUrlParser: true
 });
 
