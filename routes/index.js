@@ -17,7 +17,7 @@ router.get('/', function (req, res) {
   });
 });
 
-router.get('/details/:title', function (req, res) {
+router.get('/:title', function (req, res) {
   Product.find(function (err, items) {
     for (let i in items) {
       if (items[i].title == req.params.title) {
@@ -30,26 +30,24 @@ router.get('/details/:title', function (req, res) {
   })
 });
 
-router.get('/cart', function (req, res) {
-  res.render('shop/cart', {
-    title: 'Cart'
-  })
+router.get('/cart', function (req, res, next) {
+  if (req.url) {
+    res.render('shop/cart', {
+      title: 'Cart'
+    })
+  } else {
+    res.redirect('/')
+  }
 })
 
 router.get('/admin', function (req, res) {
-  Product.find(function (err, docs) {
-    var productChunks = [];
-    var i = 0
-    for (i in docs) {
-      productChunks.push(docs[i])
-      console.log(docs[i])
-    }
+  if (req.url) {
     res.render('admin/admin', {
-      title: 'Admin',
-      products: docs
+      title: 'Admin'
     })
-    console.log(productChunks[i])
-  });
+  } else {
+    res.redirect('/')
+  }
 })
 
 module.exports = router;
