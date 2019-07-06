@@ -16,10 +16,30 @@
   height: 100%;
 }
 
-.slide {
+.slide,
+#adminPanel {
   padding-top: 5.5%;
 }
 
 .media-body {
   margin-top: 30px;
+}
+
+#detailsCarousel .carousel-item {
+  height: 450px;
+}
+
+.adminPoster {
+  width: 50px;
+  height: 50px;
+}
+
+#adminPositionItems,
+.adminPrice,
+.adminStock,
+.adminEdit,
+.adminDelete,
+.adminDone {
+  width: 25px;
+  text-align: center;
 }

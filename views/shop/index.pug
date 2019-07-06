@@ -1,12 +1,12 @@
-extends ../layouts/layout.pug
+include ../layouts/layout.pug
 
 block index
   div.container
-    div(id="demo" class="carousel slide mb-1 carousel-fade" data-ride="carousel")
+    div(id="indexCarousel" class="carousel slide mb-1 carousel-fade" data-ride="carousel")
       ul(class="carousel-indicators")
-        li(data-target="#demo" data-slide-to="0")
-        li(data-target="#demo" data-slide-to="1")
-        li(data-target="#demo" data-slide-to="2")
+        li(data-target="#indexCarousel" data-slide-to="0")
+        li(data-target="#indexCarousel" data-slide-to="1")
+        li(data-target="#indexCarousel" data-slide-to="2")
       div(class="carousel-inner rounded")
         div(class="carousel-item active")
           img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg" alt="Los Angeles" width="550" height="250")
@@ -16,9 +16,9 @@ block index
           img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg" alt="Los Angeles" width="550" height="250")
           div(class="carousel-caption")
             h5 2
-      a(class="carousel-control-prev" href="#demo" data-slide="prev")
+      a(class="carousel-control-prev" href="#indexCarousel" data-slide="prev")
         span(class="carousel-control-prev-icon")
-      a(class="carousel-control-next" href="#demo" data-slide="next")
+      a(class="carousel-control-next" href="#indexCarousel" data-slide="next")
         span(class="carousel-control-next-icon")
 
     div(class="row text-center")
@@ -31,4 +31,4 @@ block index
               p(class="card-text") #{product.price}$
             div(class="card-footer bg-dark")
               a(href=`/${product.title}` class="mw-5 btn btn-info mr-1") Details
-              a(href="#" class="mw-50 btn btn-success") Add to cart
+              a(href="#" class="mw-5 btn btn-success") Add to cart

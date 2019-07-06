@@ -1,19 +1,43 @@
-extends ../layouts/layout.pug
+include ../layouts/layout.pug
 
 block details
+  <!--DACA E TIMP BACKGROUD IMAGE CU POSTERUL DE LA JOC -->
   div.container
-  <!-- Row -->
-    div(class="p-3")
-      div(class="media pt-5")
+    div(class="pt-5")
+      div(class="media pt-2")
         div(class="h-100 w-50")
           h4(class="mt-0") 
             strong #{product.title}
-          div(class="embed-responsive rounded embed-responsive-21by9")
-            iframe(class="embed-responsive-item" allowfullscreen src= product.trailerGame)
-        <!-- /.col-lg-8 -->
-        div(class="media-body ml-5 align-bottom h-100 clearfix ")
-          p(class="text-justify") #{product.description}
-          a(class="btn btn-success float-right" href="#") Add to cart
-    div(class="p-3 text-center")
-        each image in product.imagesSlider
-          img(class="rounded w-25 h-25 ml-2 d-inline" src= image)
+              <!-- /.col-lg-8 -->
+    div(class="media-body mt-0 align-bottom h-100 clearfix ")
+      p(class="text-justify") #{product.description}
+      a(class="btn btn-success float-right" href="#") Add to cart
+
+    <!-- Video and Details -->
+    div(class="media pt-1")
+      div(class="h-100 w-50")
+        div(class="embed-responsive rounded embed-responsive-16by9")
+          iframe(class="embed-responsive-item" allowfullscreen src= product.trailerGame)
+      div(class="media-body m-0 pl-1")
+        div(class="h-100")
+          <!-- Carousel -->
+          div(id="demo" class="carousel slide mb-1 pt-0 carousel-fade" data-ride="carousel")
+            ul(class="carousel-indicators")
+              li(data-target="#demo" data-slide-to="0")
+              li(data-target="#demo" data-slide-to="1")
+              li(data-target="#demo" data-slide-to="2")
+            div(class="carousel-inner rounded")
+              each image, index in product.imagesSlider
+                unless index
+                  div(class="carousel-item active")
+                    img(src=image class="img-fluid d-block rounded mw-100" alt=product.title)
+                else
+                  div(class="carousel-item")
+                    img(src=image class="img-fluid d-block rounded mw-100" alt=product.title)
+            a(class="carousel-control-prev" href="#demo" data-slide="prev")
+              span(class="carousel-control-prev-icon")
+            a(class="carousel-control-next" href="#demo" data-slide="next")
+              span(class="carousel-control-next-icon")
+      
+
+

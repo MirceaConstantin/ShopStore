@@ -17,36 +17,34 @@ router.get('/', function (req, res) {
   });
 });
 
-router.get('/cart', function (req, res, next) {
-  if (req.url) {
-    res.render('shop/cart', {
-      title: 'Cart'
-    })
-  } else {
-    res.redirect('/')
-  }
+router.get('/cart', function (req, res) {
+  res.render('shop/cart', {
+    title: 'Cart'
+  })
 })
 
 router.get('/admin', function (req, res) {
-  if (req.url) {
+  Product.find(function (err, adminItems) {
+    var productChunks = [];
+    var chunkSize = 3;
+    for (var i = 0; i < adminItems.length; i += chunkSize) {
+      productChunks.push(adminItems.slice(i, i + chunkSize))
+    }
     res.render('admin/admin', {
-      title: 'Admin'
+      title: 'Admin',
+      adminItems: adminItems
     })
-  } else {
-    res.redirect('/')
-  }
-})
+  })
+});
 
 router.get('/:title', function (req, res) {
   Product.find({
     title: `${req.params.title}`
   }, function (err, items) {
-    for (let i in items) {
-      res.render('details/detail', {
-        title: 'Details',
-        product: items[i]
-      })
-    }
+    res.render('details/detail', {
+      title: 'Details',
+      product: items[0]
+    })
   })
 });
 
