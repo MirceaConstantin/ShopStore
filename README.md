@@ -1,6 +1,6 @@
 # Game Store
 
-Store Shop with nodeJS / Pug Engine / Bootstrap and MongoDB as database.
+Shopping Store with nodeJS / Pug Engine / Bootstrap and MongoDB as database.
 
 ## Installation
 

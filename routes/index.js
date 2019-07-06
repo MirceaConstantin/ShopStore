@@ -17,19 +17,6 @@ router.get('/', function (req, res) {
   });
 });
 
-router.get('/:title', function (req, res) {
-  Product.find(function (err, items) {
-    for (let i in items) {
-      if (items[i].title == req.params.title) {
-        res.render('details/detail', {
-          title: 'Details',
-          product: items[i]
-        })
-      }
-    }
-  })
-});
-
 router.get('/cart', function (req, res, next) {
   if (req.url) {
     res.render('shop/cart', {
@@ -49,5 +36,18 @@ router.get('/admin', function (req, res) {
     res.redirect('/')
   }
 })
+
+router.get('/:title', function (req, res) {
+  Product.find({
+    title: `${req.params.title}`
+  }, function (err, items) {
+    for (let i in items) {
+      res.render('details/detail', {
+        title: 'Details',
+        product: items[i]
+      })
+    }
+  })
+});
 
 module.exports = router;
