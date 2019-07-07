@@ -3,18 +3,21 @@ include ../layouts/layout.pug
 block details
   <!--DACA E TIMP BACKGROUD IMAGE CU POSTERUL DE LA JOC -->
   div.container
-    div(class="pt-5")
-      div(class="media pt-2")
-        div(class="h-100 w-50")
-          h4(class="mt-0") 
-            strong #{product.title}
-              <!-- /.col-lg-8 -->
-    div(class="media-body mt-0 align-bottom h-100 clearfix ")
-      p(class="text-justify") #{product.description}
-      a(class="btn btn-success float-right" href="#") Add to cart
+    div(class="media row mt-1")
+      div(class="h-100 col-12 pl-0 pr-0")
+        h4(class="mt-0") 
+          strong #{product.title}
+            <!-- /.col-lg-8 -->
+        each genre in product.genre
+          span(class="badge mr-1 badge-success") #{genre}
 
+      div(class="col-12 media-body mt-0 pl-0 pr-0 align-bottom h-100 w-100 clearfix ")
+        p(class="text-justify") #{product.description}
+        a(class="btn btn-success float-right" href="#") Add to cart
+        each platform in product.platform
+          span(class="badge mr-1 badge-info") #{platform}
     <!-- Video and Details -->
-    div(class="media pt-1")
+    div(class="media row pt-1")
       div(class="h-100 w-50")
         div(class="embed-responsive rounded embed-responsive-16by9")
           iframe(class="embed-responsive-item" allowfullscreen src= product.trailerGame)
@@ -23,9 +26,11 @@ block details
           <!-- Carousel -->
           div(id="demo" class="carousel slide mb-1 pt-0 carousel-fade" data-ride="carousel")
             ul(class="carousel-indicators")
-              li(data-target="#demo" data-slide-to="0")
-              li(data-target="#demo" data-slide-to="1")
-              li(data-target="#demo" data-slide-to="2")
+              each image, i in product.imagesSlider
+                unless i
+                  li(class="active" data-target="#demo" data-slide-to=i)
+                else
+                  li(data-target="#demo" data-slide-to=i)
             div(class="carousel-inner rounded")
               each image, index in product.imagesSlider
                 unless index
@@ -38,6 +43,6 @@ block details
               span(class="carousel-control-prev-icon")
             a(class="carousel-control-next" href="#demo" data-slide="next")
               span(class="carousel-control-next-icon")
-      
+        
 
 
