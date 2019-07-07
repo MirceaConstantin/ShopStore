@@ -2,4 +2,55 @@ include ../layouts/layout.pug
 
 block cart
   .container
-    
+    div(class="pt-5")
+      div(class="pt-3 row")
+        table(class="table table-hover w-75" id="dataTable" cellspacing="0")
+          thead
+            tr(class="table-primary")
+              th(id="adminPositionItems" scope="col") #
+              th(class="text-center adminPoster" scope="col") Poster
+              th(scope="col") Title
+              th(class="adminPrice" scope="col") Price
+              th(class="adminStock" scope="col") Quantity
+              th(class="adminEdit" scope="col") Total
+          tbody
+            tr
+              th(class="text-center align-middle" scope="row") 1
+              td(class="text-center align-middle" scope="row")
+                img(class="cartPoster align-middle" src="#")
+              td(class="align-middle" scope="row") Title
+              td(class="cartPrice align-middle" scope="row") $
+              td(class="cartQuantity align-middle" scope="row")
+                input(class="quantityInput" type="number")
+              td(class="cartTotal align-middle" scope="row") $
+            tr(class="table-success")
+              th(class="text-center align-middle" scope="row") 1
+              td(class="text-center align-middle" scope="row")
+                img(class="cartPoster align-middle" src="#")
+              td(class="align-middle" scope="row") Title
+              td(class="cartPrice align-middle" scope="row") $
+              td(class="cartQuantity align-middle" scope="row")
+                input(class="quantityInput" type="number")
+              td(class="cartTotal align-middle" scope="row") $
+        div(class="w-25 pl-1")
+          table(class="table table-hover")
+            thead
+              tr(class="table-primary")
+                th(colspan="3" scope="col") Your shopping list
+                th
+                  span(class="badge float-right badge-light") 4
+            tfoot
+              tr(class="table-primary")
+                th(colspan="3" scope="col") Total price
+                th
+                  span(class="badge float-right badge-light") 250 $
+            tbody
+              tr
+                td(colspan="2") Title
+                td Price
+                td(class="float-right") Quantity
+              tr
+                td(colspan="2") Title
+                td Price
+                td(class="float-right") Quantity
+

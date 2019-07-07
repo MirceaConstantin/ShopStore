@@ -7,10 +7,9 @@ block admin
         div( class="card-header")
           h6(class="m-0 p-2 float-left font-weight-bold ") Add new product
           div(class="float-right d-line")
-            a(class="btn btn-warning mr-1" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample") Show the panel
-            a(href="#" class="btn btn-success ")
+            a(class="btn btn-warning mr-1" data-toggle="collapse" href="#addNewItem" role="button" aria-expanded="false" aria-controls="addNewItem")
               i(class="fas fa-plus-square")
-        div(class="collapse" id="collapseExample")
+        div(class="collapse" id="addNewItem")
           div(class="card-body p-3")
             div( class="input-group mb-2")
                 input(type="text" class="form-control" placeholder="Add title of product" aria-label="Add title of product" aria-describedby="button-addon2")
@@ -46,14 +45,40 @@ block admin
         each item, i in adminItems
           tr
             th(class="text-center align-middle" scope="row") #{i+1}
-            th(class="text-center align-middle" scope="row")
+            td(class="text-center align-middle" scope="row")
               img(class="adminPoster align-middle" src= item.imagePoster)
-            th(class="align-middle" scope="row") #{item.title}
-            th(class="adminPrice align-middle" scope="row") $ #{item.price}
-            th(class="adminStock align-middle" scope="row") #{item.stock}
-            th(class="adminEdit align-middle" scope="row")
-              a(class="btn btn-light" href="#")
+            td(class="align-middle" scope="row") #{item.title}
+            td(class="adminPrice align-middle" scope="row") $ #{item.price}
+            td(class="adminStock align-middle" scope="row") #{item.stock}
+            td(class="adminEdit align-middle" scope="row")
+              a(class="btn btn-light" data-toggle="collapse" href=`#editProduct-${i+1}` role="button" aria-expanded="false" aria-controls="editProduct")              
                 <i href="#" class="fas fa-pencil-alt "></i>
-            th(class="adminDelete align-middle" scope="row")
+            td(class="adminDelete align-middle" scope="row")
               a(class="btn btn-danger" href="#")
                 <i class="fas fa-trash-alt"></i>
+          tr.d-none
+            td(colspan="8")
+              div(class="collapse" id= `editProduct-${i+1}`)
+                a(class="btn btn-info float-right mr-1 mb-1" href="#")
+                  <i class="fas fa-check-square"></i>
+                div(class="card-body p-1")
+                  div( class="input-group mb-1")
+                      input(type="text" class="form-control" placeholder="Add title of product" aria-label="Add title of product" aria-describedby="button-addon2")
+                  div( class="input-group mb-1")
+                    input(type="url" class="form-control" placeholder="Add the poster" aria-label="Add the poster" aria-describedby="button-addon2")
+                    div(class="input-group-append")
+                      button(class="btn btn-info" type="submit" id="button-addon2") Upload
+                  div( class="input-group mb-1")
+                    input(type="url" class="form-control" placeholder="Add image for slider" aria-label="Add images for slider" aria-describedby="button-addon2")
+                  div( class="input-group mb-1")
+                    input(type="url" class="form-control" placeholder="Add trailer" aria-label="Add trailer" aria-describedby="button-addon2")
+                  div( class="input-group mb-1")
+                    input(type="text" class="form-control" placeholder="Add description" aria-label="Add description" aria-describedby="button-addon2")
+                  div( class="input-group mb-1")
+                    input(type="number" class="form-control" placeholder="Add price" aria-label="Add price" aria-describedby="button-addon2")
+                  div( class="input-group mb-1")
+                    input(type="text" class="form-control" placeholder="Add genre" aria-label="Add genre" aria-describedby="button-addon2")
+                  div( class="input-group mb-1")
+                    input(type="text" class="form-control" placeholder="Add platfroms" aria-label="Add platfroms" aria-describedby="button-addon2")
+                  div( class="input-group mb-1")
+                    input(type="number" class="form-control" placeholder="Add stock" aria-label="Add stock" aria-describedby="button-addon2")
