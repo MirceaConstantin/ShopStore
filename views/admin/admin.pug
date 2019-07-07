@@ -2,12 +2,12 @@ include ../layouts/layout.pug
 
 block admin
   .container
-    .table-responsive#adminPanel
+    div(class="mt-1 mt-xl-1 mt-lg-1 mt-md-1 mt-sm-1table-responsive" id="adminPanel")
       div(class="card mb-1")
         div( class="card-header")
           h6(class="m-0 p-2 float-left font-weight-bold ") Add new product
           div(class="float-right d-line")
-            a(class="btn btn-warning mr-1" data-toggle="collapse" href="#addNewItem" role="button" aria-expanded="false" aria-controls="addNewItem")
+            a(class="btn btn-warning mr-0" data-toggle="collapse" href="#addNewItem" role="button" aria-expanded="false" aria-controls="addNewItem")
               i(class="fas fa-plus-square")
         div(class="collapse" id="addNewItem")
           div(class="card-body p-3")
@@ -15,8 +15,6 @@ block admin
                 input(type="text" class="form-control" placeholder="Add title of product" aria-label="Add title of product" aria-describedby="button-addon2")
             div( class="input-group mb-2")
               input(type="url" class="form-control" placeholder="Add the poster" aria-label="Add the poster" aria-describedby="button-addon2")
-              div(class="input-group-append")
-                button(class="btn btn-info" type="submit" id="button-addon2") Upload
             div( class="input-group mb-2")
               input(type="url" class="form-control" placeholder="Add image for slider" aria-label="Add images for slider" aria-describedby="button-addon2")
             div( class="input-group mb-2")
@@ -31,6 +29,8 @@ block admin
               input(type="text" class="form-control" placeholder="Add platfroms" aria-label="Add platfroms" aria-describedby="button-addon2")
             div( class="input-group mb-2")
               input(type="number" class="form-control" placeholder="Add stock" aria-label="Add stock" aria-describedby="button-addon2")
+            div( class="input-group")            
+              a(class="btn btn-success w-100 mr-0" href="#") Submit
       table(class="table table-dark" id="dataTable" width="100%" cellspacing="0")
         thead
           tr
@@ -56,18 +56,14 @@ block admin
             td(class="adminDelete align-middle" scope="row")
               a(class="btn btn-danger" href="#")
                 <i class="fas fa-trash-alt"></i>
-          tr.d-none
+          tr
             td(colspan="8")
               div(class="collapse" id= `editProduct-${i+1}`)
-                a(class="btn btn-info float-right mr-1 mb-1" href="#")
-                  <i class="fas fa-check-square"></i>
                 div(class="card-body p-1")
                   div( class="input-group mb-1")
                       input(type="text" class="form-control" placeholder="Add title of product" aria-label="Add title of product" aria-describedby="button-addon2")
                   div( class="input-group mb-1")
                     input(type="url" class="form-control" placeholder="Add the poster" aria-label="Add the poster" aria-describedby="button-addon2")
-                    div(class="input-group-append")
-                      button(class="btn btn-info" type="submit" id="button-addon2") Upload
                   div( class="input-group mb-1")
                     input(type="url" class="form-control" placeholder="Add image for slider" aria-label="Add images for slider" aria-describedby="button-addon2")
                   div( class="input-group mb-1")
@@ -82,3 +78,5 @@ block admin
                     input(type="text" class="form-control" placeholder="Add platfroms" aria-label="Add platfroms" aria-describedby="button-addon2")
                   div( class="input-group mb-1")
                     input(type="number" class="form-control" placeholder="Add stock" aria-label="Add stock" aria-describedby="button-addon2")
+                  div( class="input-group")                  
+                    a(class="btn btn-success w-100 mr-0" href="#") Update
