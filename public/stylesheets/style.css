@@ -47,6 +47,10 @@
   width: 40px;
 }
 
+#qty {
+  width: 60px;
+}
+
 .text-block {
   position: absolute;
   bottom: 20px;

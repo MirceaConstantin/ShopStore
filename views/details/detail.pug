@@ -2,7 +2,8 @@ include ../layouts/layout.pug
 
 block details
   <!--DACA E TIMP BACKGROUD IMAGE CU POSTERUL DE LA JOC -->
-  div.container
+  .container
+    script(src="/javascript/detail.js")
     div(class="media row mt-1")
       div(class="h-100 col-12 pl-0 pr-0")
         h4(class="mt-0") 
@@ -13,7 +14,8 @@ block details
 
       div(class="col-12 media-body mt-0 pl-0 pr-0 align-bottom h-100 w-100 clearfix ")
         p(class="text-justify") #{product.description}
-        a(class="btn btn-success float-right" href="#") Add to cart
+        a(class="btn btn-success float-right" id="addToCartDetails" onclick=`addToCart("${product._id}")`) Add to cart
+        input(id="qty" type="number" class="float-right mr-1 form-control" value=1 aria-describedby="button-addon2")   
         each platform in product.platform
           span(class="badge mr-1 badge-info") #{platform}
     <!-- Video and Details -->
@@ -43,6 +45,4 @@ block details
               span(class="carousel-control-prev-icon")
             a(class="carousel-control-next" href="#demo" data-slide="next")
               span(class="carousel-control-next-icon")
-        
-
-
+      

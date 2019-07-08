@@ -6,7 +6,7 @@ var Product = require('../models/product');
 router.get('/', function (req, res) {
   Product.find(function (err, docs) {
     var productChunks = [];
-    var chunkSize = 3;
+    var chunkSize = 9;
     for (var i = 0; i < docs.length; i += chunkSize) {
       productChunks.push(docs.slice(i, i + chunkSize))
     }
@@ -18,10 +18,18 @@ router.get('/', function (req, res) {
 });
 
 router.get('/cart', function (req, res) {
-  res.render('shop/cart', {
-    title: 'Cart'
+  Product.find(function (err, docs) {
+    var productChunks = [];
+    var chunkSize = 9;
+    for (var i = 0; i < docs.length; i += chunkSize) {
+      productChunks.push(docs.slice(i, i + chunkSize))
+    }
+    res.render('shop/cart', {
+      title: 'Cart',
+      cartProd: docs
+    })
   })
-})
+});
 
 router.get('/admin', function (req, res) {
   Product.find(function (err, adminItems) {
