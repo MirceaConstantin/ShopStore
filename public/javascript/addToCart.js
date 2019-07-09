@@ -1,3 +1,14 @@
+window.addEventListener('DOMContentLoaded', () => {
+  let badgeCart = document.querySelector('#badgeCart');
+  localStorage.getItem('myCart')
+  var totalQty = 0;
+  var data = JSON.parse(localStorage.getItem('myCart'))
+  for (let i in data) {
+    totalQty += data[i].qty;
+  }
+  badgeCart.innerHTML = totalQty;
+});
+
 function createPopUp(title, qty, poster) {
   var notificationArea = document.querySelector('#notice');
   var notificationTitle = document.createElement('div');
@@ -44,5 +55,12 @@ function addToCart(id, title, poster) {
   } else {
     localStorage.setItem('myCart', JSON.stringify([cart]))
   }
+
+  let badgeCart = document.querySelector('#badgeCart');
+  var totalQty = 0;
+  for (let i in data) {
+    totalQty += data[i].qty;
+  }
+  badgeCart.innerHTML = totalQty;
   createPopUp(title, qty, poster)
 }
