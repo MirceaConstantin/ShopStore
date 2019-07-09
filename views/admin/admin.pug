@@ -1,6 +1,7 @@
 include ../layouts/layout.pug
 
 block admin
+  script(src="javascript/admin.js")
   mixin inputs
     div( class="input-group mb-2")
         input(type="text" class="form-control" placeholder="Add title of product" aria-label="Add title of product" aria-describedby="button-addon2")
@@ -53,12 +54,12 @@ block admin
             td(class="adminPrice align-middle" scope="row") $ #{item.price}
             td(class="adminStock align-middle" scope="row") #{item.stock}
             td(class="adminEdit align-middle" scope="row")
-              a(class="btn btn-light" data-toggle="collapse" href=`#editProduct-${i+1}` role="button" aria-expanded="false" aria-controls="editProduct")              
+              a(class="btn btn-light editProduct" data-toggle="collapse" href=`#editProduct-${i+1}` role="button" aria-expanded="false" aria-controls="editProduct")              
                 <i href="#" class="fas fa-pencil-alt "></i>
             td(class="adminDelete align-middle" scope="row")
               a(class="btn btn-danger" href="#")
                 <i class="fas fa-trash-alt"></i>
-          tr
+          tr(class="editProductPanel d-none")
             td(colspan="8")
               div(class="collapse" id= `editProduct-${i+1}`)
                 div(class="card-body p-1")
