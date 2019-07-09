@@ -2,6 +2,7 @@ include ../layouts/layout.pug
 
 block index
   .container
+    div(id="notice" style="position: fixed; right: 0; z-index: 9999;")
     div(id="indexCarousel" class="mt-1 mt-xl-1 mt-lg-1 mt-md-1 mt-sm-1 carousel slide mb-1 carousel-fade" data-ride="carousel")
       ul(class="carousel-indicators")
         li(class="active" data-target="#indexCarousel" data-slide-to="0")
@@ -41,4 +42,4 @@ block index
               p(class="card-text") #{product.price}$
             div(class="card-footer bg-dark")
               a(href=`/${product.title}` class="btn btn-info mr-1") Details
-              a(id="addToCart" onclick=`addToCart("${product._id}", "${product.title}")` class="btn btn-success") Add to cart
+              a(id="addToCart" onclick=`addToCart("${product._id}", "${product.title}", "${product.imagePoster}")` class="btn btn-success") Add to cart

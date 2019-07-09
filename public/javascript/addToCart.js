@@ -1,6 +1,22 @@
-var qty = undefined;
+function createPopUp(title, qty, poster) {
+  var notificationArea = document.querySelector('#notice');
+  var notificationTitle = document.createElement('div');
+  notificationTitle.classList.add("noticePanel")
+  notificationTitle.innerHTML = `
+  <div class="media">
+    <img class="mr-3" src=${poster} style="width: 20%;">
+    <div class="media-body mt-0">
+      <h5 class="mt-0 mb-3">${title}</h5>
+      <span>${qty} added to your cart.</span>
+    </div>
+    </div>`
+  notificationArea.appendChild(notificationTitle)
+  setTimeout(() => {
+    notificationTitle.remove()
+  }, 5000)
+}
 
-function addToCart(id, title) {
+function addToCart(id, title, poster) {
   var qty = document.querySelector('#qty');
   if (qty == undefined) {
     qty = 1;
@@ -12,13 +28,21 @@ function addToCart(id, title) {
     productTitle: title,
     qty: qty
   }
-  var myCart;
-  if (!myCart) {
-    sessionStorage.setItem('item', JSON.stringify(cart))
-    myCart = JSON.parse(sessionStorage.item)
-    console.log(myCart)
+  if (localStorage.getItem('myCart')) {
+    var checkGame = false;
+    var data = JSON.parse(localStorage.getItem('myCart'))
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].productID == id) {
+        checkGame = true;
+        data[i].qty++
+      }
+    }
+    if (checkGame == false) {
+      data.push(cart);
+    }
+    localStorage.setItem('myCart', JSON.stringify(data))
   } else {
-    sessionStorage.getItem(myCart.productTitle)
-    console.log('else')
+    localStorage.setItem('myCart', JSON.stringify([cart]))
   }
+  createPopUp(title, qty, poster)
 }
