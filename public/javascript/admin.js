@@ -14,7 +14,6 @@ function editProd() {
     editProductPanel = document.querySelectorAll('.editProductPanel');
     for (let i = 0; i < editProd.length; i++) {
         editProd[i].addEventListener('click', function () {
-            editProductPanel[i].classList.toggle('d-none');
             console.log()
         })
     }
