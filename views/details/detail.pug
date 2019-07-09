@@ -3,16 +3,19 @@ include ../layouts/layout.pug
 block details
   <!--DACA E TIMP BACKGROUD IMAGE CU POSTERUL DE LA JOC -->
   .container
+    div(id="notice" style="position: fixed; right: 0; z-index: 9999;")
     div(class="media row mt-1")
       div(class="h-100 col-12 pl-0 pr-0")
         h4(class="mt-0") 
           strong #{product.title}
             <!-- /.col-lg-8 -->
+          div(class="float-right ")
+            span(class="badge badge-info") #{product.price} $
         each genre in product.genre
           span(class="badge mr-1 badge-success") #{genre}
       div(class="col-12 media-body mt-0 pl-0 pr-0 align-bottom h-100 w-100 clearfix ")
         p(class="text-justify") #{product.description}
-        a(class="btn btn-success float-right" id="addToCartDetails" onclick=`addToCart("${product._id}", "${product.title}")`) Add to cart
+        a(class="btn btn-success float-right" id="addToCartDetails" onclick=`addToCart("${product._id}", "${product.title}", "${product.imagePoster}")`) Add to cart
         input(id="qty" type="number" class="float-right mr-1 form-control" value=1 aria-describedby="button-addon2")   
         each platform in product.platform
           span(class="badge mr-1 badge-info") #{platform}
