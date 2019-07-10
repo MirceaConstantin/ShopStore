@@ -18,15 +18,15 @@ router.get('/', function (req, res) {
 });
 
 router.get('/cart', function (req, res) {
-  Product.find(function (err, docs) {
+  Product.find(function (err, cartItems) {
     var productChunks = [];
     var chunkSize = 9;
-    for (var i = 0; i < docs.length; i += chunkSize) {
-      productChunks.push(docs.slice(i, i + chunkSize))
+    for (var i = 0; i < cartItems.length; i += chunkSize) {
+      productChunks.push(cartItems.slice(i, i + chunkSize))
     }
     res.render('shop/cart', {
       title: 'Cart',
-      cartProd: docs
+      cartProd: cartItems
     })
   })
 });
@@ -45,6 +45,10 @@ router.get('/admin', function (req, res) {
   })
 });
 
+router.post('/admin', function (req, res) {
+
+});
+
 router.get('/:title', function (req, res) {
   Product.find({
     title: `${req.params.title}`
@@ -55,5 +59,6 @@ router.get('/:title', function (req, res) {
     })
   })
 });
+
 
 module.exports = router;

@@ -27,7 +27,7 @@ function createPopUp(title, qty, poster) {
   }, 5000)
 }
 
-function addToCart(id, title, poster) {
+function addToCart(id, title, poster, price) {
   var qty = document.querySelector('#qty');
   if (qty == undefined) {
     qty = 1;
@@ -37,7 +37,8 @@ function addToCart(id, title, poster) {
   var cart = {
     productID: id,
     productTitle: title,
-    qty: qty
+    qty: qty,
+    productPrice: price
   }
   if (localStorage.getItem('myCart')) {
     var checkGame = false;
