@@ -46,8 +46,43 @@ router.get('/admin', function (req, res) {
 });
 
 router.post('/admin', function (req, res) {
+  if (!req.body.title) {
+    res.render('show_message', {
+      message: "Sorry, you provided worng info",
+      type: "error"
+    });
+  } else {
+    let newProd = new Product(req.body);
 
+    newProd.save(function (err, newProd) {
+      if (err)
+        res.render('show_message', {
+          message: "Database error",
+          type: "error"
+        });
+      else
+        res.render('show_message', {
+          message: "New person added",
+          type: "success",
+          product: req.body
+        });
+    });
+  }
+  Product.find(function (err, adminItems) {
+    var productChunks = [];
+    var chunkSize = 3;
+    for (var i = 0; i < adminItems.length; i += chunkSize) {
+      productChunks.push(adminItems.slice(i, i + chunkSize))
+    }
+    res.render('admin/admin', {
+      title: 'Admin',
+      message: "New person added",
+      adminItems: adminItems
+    })
+  })
 });
+
+
 
 router.get('/:title', function (req, res) {
   Product.find({

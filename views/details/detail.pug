@@ -15,8 +15,8 @@ block details
           span(class="badge mr-1 badge-success") #{genre}
       div(class="col-12 media-body mt-0 pl-0 pr-0 align-bottom h-100 w-100 clearfix ")
         p(class="text-justify") #{product.description}
-        a(class="btn btn-success float-right" id="addToCartDetails" onclick=`addToCart("${product._id}", "${product.title}", "${product.imagePoster}", "${product.price")`) Add to cart
-        input(id="qty" type="number" class="float-right mr-1 form-control" value=1 aria-describedby="button-addon2")   
+        a(class="btn btn-success float-right" id="addToCartDetails" onclick=`addToCart("${product._id}", "${product.title}", "${product.imagePoster}", "${product.price}")`) Add to cart
+        input(id="qty" type="number" class="float-right mr-1 form-control" value=1 aria-describedby="button-addon2")
         each platform in product.platform
           span(class="badge mr-1 badge-info") #{platform}
     <!-- Video and Details -->
