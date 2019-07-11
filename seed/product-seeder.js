@@ -178,7 +178,7 @@ var products = [
 
 var done = 0;
 for (var i = 0; i < products.length; i++) {
-  products[i].save(function (err, result) {
+  products[i].save((err, result) => {
     done++;
     if (done === products.length) {
       exit();
