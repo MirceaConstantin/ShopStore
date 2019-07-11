@@ -53,15 +53,17 @@ block admin
             tr
               th(class="text-center align-middle" scope="row") #{i+1}
               td(class="text-center align-middle" scope="row")
-                img(class="adminPoster align-middle" src= item.imagePoster)
-              td(class="align-middle" scope="row") #{item.title}
+                a(href=`/${item.title}`)
+                  img(class="adminPoster align-middle" src= item.imagePoster)
+              td(class="align-middle" scope="row")
+                a(class="text-white" href=`/${item.title}`) #{item.title}
               td(class="adminPrice align-middle" scope="row") $ #{item.price}
               td(class="adminStock align-middle" scope="row") #{item.stock}
               td(class="adminEdit align-middle" scope="row")
                 a(class="btn btn-light editProduct" data-toggle="collapse" href=`#editProduct-${i+1}` role="button" aria-expanded="false" aria-controls="editProduct")              
                   <i href="#" class="fas fa-pencil-alt "></i>
               td(class="adminDelete align-middle" scope="row")
-                a(class="btn btn-danger" href="#")
+                a(class="btn btn-danger" href=`/admin`)
                   <i class="fas fa-trash-alt"></i>
             tr(class="editProductPanel")
               td(colspan="8")

@@ -34,12 +34,14 @@ block index
       each product in products
         div(class="col-sm-12 col-lg-3 col-md-6 mb-2")
           div(class="card h-100")
-            img(class="card-img-top" src= product.imagePoster alt= product.title)
+            a(href=`/${product.title}`)
+              img(class="card-img-top" src= product.imagePoster alt= product.title)
             div(class="card-body p-1")
-              h5(class="card-title mb-0") #{product.title}
+              h5(class="card-title mb-0")
+                a(class="text-body" href=`/${product.title}`) #{product.title}
               each genre in product.genre
                 span(class="badge ml-1 badge-info") #{genre}
               p(class="card-text") #{product.price}$
             div(class="card-footer bg-dark")
               a(href=`/${product.title}` class="btn btn-info mr-1") Details
-              a(id="addToCart" onclick=`addToCart("${product._id}", "${product.title}", "${product.imagePoster}", "${product.price}")` class="btn btn-success") Add to cart
+              a(id="addToCart" onclick=`addToCart("${product._id}", "${product.title}", "${product.imagePoster}", "${product.price}")` class="text-white btn btn-success") Add to cart
