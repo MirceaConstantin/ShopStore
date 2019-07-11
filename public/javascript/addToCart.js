@@ -18,7 +18,7 @@ function updateQtyCart() {
   localStorage.getItem('myCart')
   let data = JSON.parse(localStorage.getItem('myCart'))
   for (let i in data) {
-    totalQty += Number(data[i].qty);
+    totalQty += data[i].qty;
   }
   if (totalQty == 0) {
     badgeCart.innerHTML = ''
@@ -45,7 +45,7 @@ function createPopUp(title, qty, poster) {
   }, 5000)
 }
 
-function addToCart(id, title, poster, price) {
+function addToCart(id, title, poster) {
   let qty = document.querySelector('#qty');
   if (qty == undefined) {
     qty = 1;
@@ -55,8 +55,7 @@ function addToCart(id, title, poster, price) {
   let cart = {
     productID: id,
     productTitle: title,
-    qty: qty,
-    productPrice: price
+    qty: qty
   }
   if (localStorage.getItem('myCart')) {
     let checkGame = false;
@@ -72,7 +71,6 @@ function addToCart(id, title, poster, price) {
     }
     localStorage.setItem('myCart', JSON.stringify(data))
   } else {
-    console.log('else')
     localStorage.setItem('myCart', JSON.stringify([cart]))
   }
   updateQtyCart();
