@@ -50,48 +50,68 @@ router.route('/admin')
     })
   })
   .post((req, res) => {
-    if (!req.body.title) {
-      res.render('show_message', {
-        message: "Sorry, you provided worng info",
-        type: "error"
-      });
-    } else {
-      let newProd = new Product(req.body);
-      //FIXME: Multiple images for slider / genre / platforms push to array from db
-      newProd.save((err, newProd) => {
-        if (err)
+    switch (req.body.action) {
+      case 'add':
+        if (!req.body.title) {
           res.render('show_message', {
-            message: "Database error",
+            message: "Sorry, you provided worng info",
             type: "error"
           });
-        else
-          res.render('show_message', {
-            message: "New person added",
-            type: "success",
-            product: req.body
+        } else {
+          let newProd = new Product({
+            title: req.body.title,
+            imagePoster: req.body.imagePoster,
+            imagesSlider: req.body.imagesSlider.split(/ *[,;]+ */g),
+            trailerGame: req.body.trailerGame.replace("watch\?v=", "embed/"),
+            description: req.body.description,
+            price: req.body.price,
+            genre: req.body.genre.split(/ *[,;]+ */g),
+            platform: req.body.platform.split(/ *[,;]+ */g),
+            stock: req.body.stock
           });
-      });
-    };
-    Product.find((err, adminItems) => {
-      let productChunks = [];
-      let chunkSize = 3;
-      for (let i = 0; i < adminItems.length; i += chunkSize) {
-        productChunks.push(adminItems.slice(i, i + chunkSize))
-      }
-      res.render('admin/admin', {
-        title: 'Admin',
-        message: "New person added",
-        adminItems: adminItems
-      })
-    });
+          newProd.save((err, newProd) => {
+            if (err)
+              res.render('show_message', {
+                message: "Database error",
+                type: "error"
+              });
+            else
+              res.render('show_message', {
+                message: "New product added",
+                type: "success",
+                product: req.body
+              });
+          });
+        };
+        Product.find((err, adminItems) => {
+          let productChunks = [];
+          let chunkSize = 3;
+          for (let i = 0; i < adminItems.length; i += chunkSize) {
+            productChunks.push(adminItems.slice(i, i + chunkSize))
+          }
+          res.render('admin/admin', {
+            title: 'Admin',
+            message: "New product added",
+            adminItems: adminItems
+          })
+        });
+        break;
+        //Update Method
+      case 'edit':
+        res.send('edit')
+        break;
+        //Delete Method
+      case 'delete':
+        res.send('delete')
+        break;
+    }
   })
-
 
 //Details router
 router.get('/:title', (req, res) => {
   Product.find({
     title: `${req.params.title}`
-  }, function (err, items) {
+  }, (err, items) => {
     res.render('details/detail', {
       title: 'Details',
       product: items[0]
