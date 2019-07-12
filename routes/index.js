@@ -1,7 +1,6 @@
 let express = require('express');
 let router = express.Router();
 let Product = require('../models/product');
-//let findProd = require('../seed/db');
 
 //Index router
 router.get('/', (req, res) => {
@@ -33,7 +32,6 @@ router.get('/cart', (req, res) => {
   })
 });
 
-
 //Admin page GET / POST / PUT / DELETE
 router.route('/admin')
   .get((req, res) => {
@@ -53,9 +51,17 @@ router.route('/admin')
     switch (req.body.action) {
       case 'add':
         if (!req.body.title) {
-          res.render('show_message', {
-            message: "Sorry, you provided worng info",
-            type: "error"
+          Product.find((err, adminItems) => {
+            let productChunks = [];
+            let chunkSize = 3;
+            for (let i = 0; i < adminItems.length; i += chunkSize) {
+              productChunks.push(adminItems.slice(i, i + chunkSize))
+            }
+            res.render('admin/admin', {
+              title: 'Admin',
+              message: "Please insert all the inputs.",
+              adminItems: adminItems
+            })
           });
         } else {
           let newProd = new Product({
@@ -70,19 +76,60 @@ router.route('/admin')
             stock: req.body.stock
           });
           newProd.save((err, newProd) => {
-            if (err)
+            if (err) {
               res.render('show_message', {
                 message: "Database error",
                 type: "error"
               });
-            else
-              res.render('show_message', {
-                message: "New product added",
-                type: "success",
-                product: req.body
+            } else {
+              Product.find((err, adminItems) => {
+                let productChunks = [];
+                let chunkSize = 3;
+                for (let i = 0; i < adminItems.length; i += chunkSize) {
+                  productChunks.push(adminItems.slice(i, i + chunkSize))
+                }
+                res.render('admin/admin', {
+                  title: 'Admin',
+                  message: "New product added",
+                  adminItems: adminItems
+                })
               });
+            }
           });
         };
+        break;
+        //Update Method
+      case 'edit':
+        /*         let myQuery = {
+                  _id: req.body.id
+                } */
+        /*         let prodStructure = {
+                  title: req.body.title,
+                  imagePoster: req.body.imagePoster, */
+        //imagesSlider: req.body.imagesSlider.split(/ *[,;]+ */g),
+        /*           trailerGame: req.body.trailerGame.replace("watch\?v=", "embed/"),
+                  description: req.body.description,
+                  price: req.body.price, */
+        //genre: req.body.genre.split(/ *[,;]+ */g),
+        //platform: req.body.platform.split(/ *[,;]+ */g),
+        /*           stock: req.body.stock
+                } */
+        /*       Person.findByIdAndUpdate(myQuery, prodStructure, (err, response) => {
+                console.log(response);
+              }); */
+        res.render('edit')
+
+        break;
+        //Delete Method
+      case 'delete':
+        if (req.body.id) {
+          let myQuery = {
+            _id: req.body.id
+          }
+          Product.deleteOne(myQuery, (err, obj) => {
+            if (err) throw err;
+          })
+        }
         Product.find((err, adminItems) => {
           let productChunks = [];
           let chunkSize = 3;
@@ -91,18 +138,10 @@ router.route('/admin')
           }
           res.render('admin/admin', {
             title: 'Admin',
-            message: "New product added",
+            message: `${req.body.title} was deleted.`,
             adminItems: adminItems
           })
         });
-        break;
-        //Update Method
-      case 'edit':
-        res.send('edit')
-        break;
-        //Delete Method
-      case 'delete':
-        res.send('delete')
         break;
     }
   })
