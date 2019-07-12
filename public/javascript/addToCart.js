@@ -11,19 +11,20 @@ window.addEventListener('DOMContentLoaded', () => {
   updateQtyCart()
 });
 
-
 function updateQtyCart() {
-  let badgeCart = document.querySelector('#badgeCart');
+  let badgeCart = document.querySelectorAll('.badgeCart');
   let totalQty = 0;
   localStorage.getItem('myCart')
   let data = JSON.parse(localStorage.getItem('myCart'))
   for (let i in data) {
     totalQty += data[i].qty;
   }
-  if (totalQty == 0) {
-    badgeCart.innerHTML = ''
-  } else {
-    badgeCart.innerHTML = totalQty;
+  for (let i in badgeCart) {
+    if (totalQty == 0) {
+      badgeCart[i].innerHTML = ''
+    } else {
+      badgeCart[i].innerHTML = totalQty;
+    }
   }
 }
 
@@ -45,6 +46,27 @@ function createPopUp(title, qty, poster) {
   }, 5000)
 }
 
+function removeAdminPopUp(message) {
+  console.log(message)
+  let notificationArea = document.querySelector('#notice');
+  if (message == undefined) {
+    notificationArea.innerHTML = ''
+  } else {
+    let notificationTitle = document.createElement('div');
+    notificationTitle.classList.add("noticePanel")
+    notificationTitle.innerHTML = `
+    <div class="media">
+      <div class="media-body mt-0">
+        <h5 class="mt-0">${message}</h5>
+      </div>
+      </div>`
+    notificationArea.appendChild(notificationTitle)
+    setTimeout(() => {
+      notificationTitle.remove();
+    }, 5000);
+  }
+}
+
 function addToCart(id, title, poster) {
   let qty = document.querySelector('#qty');
   if (qty == undefined) {
@@ -64,6 +86,8 @@ function addToCart(id, title, poster) {
       if (data[i].productID == id) {
         checkGame = true;
         data[i].qty += qty;
+      } else if (data[i].productID != id) {
+        localStorage.removeItem(data[i])
       }
     }
     if (checkGame == false) {
