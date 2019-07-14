@@ -9,7 +9,33 @@ if (document.readyState !== 'loading') {
 
 window.addEventListener('DOMContentLoaded', () => {
   updateQtyCart()
+  editAndUpdate();
 });
+
+function deleteProd(id, index) {
+  //Ajax to get response from server and delete the prod with id requested
+  console.log(id)
+  fetch(`/api/${id}`, {
+      method: 'GET'
+    })
+    .then(res => res)
+    .then((data) => {
+      console.log(data);
+
+      let prodTr = document.querySelector(`[data-id="${index}"]`);
+      prodTr.nextSibling.remove();
+      prodTr.remove();
+    })
+}
+
+function editAndUpdate() {
+  let edit = document.querySelectorAll('.editProduct')
+  for (let i = 0; i < edit.length; i++) {
+    edit[i].addEventListener('click', () => {
+      console.log('edit')
+    })
+  }
+}
 
 function updateQtyCart() {
   let badgeCart = document.querySelectorAll('.badgeCart');
