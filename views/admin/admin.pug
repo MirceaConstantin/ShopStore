@@ -46,7 +46,7 @@ block admin
             th(class="adminDelete" scope="col") Delete
         tbody
           each item, i in adminItems
-            tr
+            tr(data-id= i)
               th(class="text-center align-middle" scope="row") #{i+1}
               td(class="text-center align-middle" scope="row")
                 a(href=`/${item.title}`)
@@ -57,13 +57,10 @@ block admin
               td(class="adminStock align-middle" scope="row") #{item.stock}
               td(class="adminEdit align-middle" scope="row")
                 a(class="btn btn-light editProduct" data-toggle="collapse" href=`#editProduct-${i+1}` role="button" aria-expanded="false" aria-controls="editProduct")              
-                  <i href="#" class="fas fa-pencil-alt "></i>
+                  i(href="#" class="fas fa-pencil-alt")
               td(class="adminDelete align-middle" scope="row")
-                form(action="/admin" method="POST")
-                  input(type="hidden" name='id' value= item._id)
-                  input(type="hidden" name='action' value='delete')
-                  button(class="btn btn-danger" href=`/admin`)
-                    <i class="fas fa-trash-alt"></i>
+                button(class="btn btn-danger" onclick=`deleteProd("${item._id}", "${i}")`)
+                  i(class="fas fa-trash-alt")
             tr(class="editProductPanel")
               td(colspan="8")
                 div(class="collapse" id= `editProduct-${i+1}`)
