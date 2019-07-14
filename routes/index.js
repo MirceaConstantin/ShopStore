@@ -47,106 +47,20 @@ router.route('/admin')
       })
     })
   })
-  .post((req, res) => {
-    switch (req.body.action) {
-      case 'add':
-        if (!req.body.title) {
-          Product.find((err, adminItems) => {
-            let productChunks = [];
-            let chunkSize = 3;
-            for (let i = 0; i < adminItems.length; i += chunkSize) {
-              productChunks.push(adminItems.slice(i, i + chunkSize))
-            }
-            res.render('admin/admin', {
-              title: 'Admin',
-              message: "Please insert all the inputs.",
-              adminItems: adminItems
-            })
-          });
-        } else {
-          let newProd = new Product({
-            title: req.body.title,
-            imagePoster: req.body.imagePoster,
-            imagesSlider: req.body.imagesSlider.split(/ *[,;]+ */g),
-            trailerGame: req.body.trailerGame.replace("watch\?v=", "embed/"),
-            description: req.body.description,
-            price: req.body.price,
-            genre: req.body.genre.split(/ *[,;]+ */g),
-            platform: req.body.platform.split(/ *[,;]+ */g),
-            stock: req.body.stock
-          });
-          newProd.save((err, newProd) => {
-            if (err) {
-              res.render('show_message', {
-                message: "Database error",
-                type: "error"
-              });
-            } else {
-              Product.find((err, adminItems) => {
-                let productChunks = [];
-                let chunkSize = 3;
-                for (let i = 0; i < adminItems.length; i += chunkSize) {
-                  productChunks.push(adminItems.slice(i, i + chunkSize))
-                }
-                res.render('admin/admin', {
-                  title: 'Admin',
-                  message: "New product added",
-                  adminItems: adminItems
-                })
-              });
-            }
-          });
-        };
-        break;
-        //Update Method
-      case 'edit':
-        /*         let myQuery = {
-                  _id: req.body.id
-                } */
-        /*         let prodStructure = {
-                  title: req.body.title,
-                  imagePoster: req.body.imagePoster, */
-        //imagesSlider: req.body.imagesSlider.split(/ *[,;]+ */g),
-        /*           trailerGame: req.body.trailerGame.replace("watch\?v=", "embed/"),
-                  description: req.body.description,
-                  price: req.body.price, */
-        //genre: req.body.genre.split(/ *[,;]+ */g),
-        //platform: req.body.platform.split(/ *[,;]+ */g),
-        /*           stock: req.body.stock
-                } */
-        /*       Person.findByIdAndUpdate(myQuery, prodStructure, (err, response) => {
-                console.log(response);
-              }); */
-        res.render('edit')
 
-        break;
-        //Delete Method
-      case 'delete':
-        if (req.body.id) {
-          let myQuery = {
-            _id: req.body.id
-          }
-          Product.deleteOne(myQuery, (err, obj) => {
-            if (err) throw err;
-          })
-        }
-        Product.find((err, adminItems) => {
-          let productChunks = [];
-          let chunkSize = 3;
-          for (let i = 0; i < adminItems.length; i += chunkSize) {
-            productChunks.push(adminItems.slice(i, i + chunkSize))
-          }
-          res.render('admin/admin', {
-            title: 'Admin',
-            message: `${req.body.title} was deleted.`,
-            adminItems: adminItems
-          })
-        });
-        break;
-    }
+//Delete Router
+router.get('/api/:id', (req, res) => {
+  let myQuery = {
+    _id: req.params.id
+  }
+  Product.findOneAndDelete(myQuery, (err, obj) => {
+    if (err)
+      res.send(err);
+    res.json(myQuery)
   })
+})
 
-//Details router
+//Details Router
 router.get('/:title', (req, res) => {
   Product.find({
     title: `${req.params.title}`
@@ -157,6 +71,5 @@ router.get('/:title', (req, res) => {
     })
   })
 });
-
 
 module.exports = router;
