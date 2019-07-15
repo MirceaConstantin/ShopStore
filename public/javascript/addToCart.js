@@ -12,31 +12,6 @@ window.addEventListener('DOMContentLoaded', () => {
   editAndUpdate();
 });
 
-function deleteProd(id, index) {
-  //Ajax to get response from server and delete the prod with id requested
-  console.log(id)
-  fetch(`/api/${id}`, {
-      method: 'GET'
-    })
-    .then(res => res)
-    .then((data) => {
-      console.log(data);
-
-      let prodTr = document.querySelector(`[data-id="${index}"]`);
-      prodTr.nextSibling.remove();
-      prodTr.remove();
-    })
-}
-
-function editAndUpdate() {
-  let edit = document.querySelectorAll('.editProduct')
-  for (let i = 0; i < edit.length; i++) {
-    edit[i].addEventListener('click', () => {
-      console.log('edit')
-    })
-  }
-}
-
 function updateQtyCart() {
   let badgeCart = document.querySelectorAll('.badgeCart');
   let totalQty = 0;
@@ -125,4 +100,40 @@ function addToCart(id, title, poster) {
   }
   updateQtyCart();
   createPopUp(title, qty, poster)
+}
+
+//Add new product
+
+//Edit function
+function editAndUpdate() {
+  event.preventDefault();
+  let edit = document.querySelectorAll('.editProduct')
+  for (let i = 0; i < edit.length; i++) {
+    edit[i].addEventListener('click', () => {
+      console.log(i, 'edit')
+    })
+  }
+}
+
+function editAjax(id) {
+  fetch(`api/${id}`, {
+      method: 'GET'
+    })
+    .then(res => res)
+    .then((data) => {
+      console.log(data)
+    })
+}
+
+//Delete with Ajax
+function deleteProd(id, index) {
+  fetch(`/api/${id}`, {
+      method: 'DELETE'
+    })
+    .then(res => res)
+    .then(() => {
+      let prodTr = document.querySelector(`[data-id="${index}"]`);
+      prodTr.nextSibling.remove();
+      prodTr.remove();
+    })
 }
