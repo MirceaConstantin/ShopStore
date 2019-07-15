@@ -10,6 +10,7 @@ if (document.readyState !== 'loading') {
 window.addEventListener('DOMContentLoaded', () => {
   updateQtyCart()
   editAndUpdate();
+  addNewProd();
 });
 
 function updateQtyCart() {
@@ -103,10 +104,41 @@ function addToCart(id, title, poster) {
 }
 
 //Add new product
+function addNewProd() {
+  document.querySelector('#addNewProd').addEventListener('click', function () {
+    let title = document.querySelector('[name="title"]').value;
+    let imagePoster = document.querySelector('[name="imagePoster"]').value;
+    let imagesSlider = document.querySelector('[name="imagesSlider"]').value;
+    let trailerGame = document.querySelector('[name="trailerGame"]').value;
+    let description = document.querySelector('[name="description"]').value;
+    let price = document.querySelector('[name="price"]').value;
+    let genre = document.querySelector('[name="genre"]').value;
+    let platform = document.querySelector('[name="platform"]').value;
+    let stock = document.querySelector('[name="stock"]').value;
+    let obj = {
+      title: title,
+      imagePoster: imagePoster,
+      imagesSlider: imagesSlider.split(/ *[,;]+ */g),
+      trailerGame: trailerGame.replace("watch\?v=", "embed/"),
+      description: description,
+      price: price,
+      genre: genre.split(/ *[,;]+ */g),
+      platform: platform.split(/ *[,;]+ */g),
+      stock: stock
+    }
+    fetch('/admin', {
+        method: 'POST',
+        data: JSON.stringify(obj)
+      })
+      .then(res => console.log(res))
+      .then((data) => {
+        console.log(data)
+      })
+  })
+}
 
 //Edit function
 function editAndUpdate() {
-  event.preventDefault();
   let edit = document.querySelectorAll('.editProduct')
   for (let i = 0; i < edit.length; i++) {
     edit[i].addEventListener('click', () => {

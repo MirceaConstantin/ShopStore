@@ -13,7 +13,7 @@ router.route('/cart')
 //Admin page GET / POST / PUT / DELETE
 router.route('/admin')
   .get(products.adminPath)
-//.post(products.addNewProd)
+  .post(products.addNewProd)
 
 
 //POST / PUT / DELETE

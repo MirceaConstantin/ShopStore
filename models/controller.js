@@ -58,7 +58,36 @@ exports.adminPath = function (req, res) {
 };
 
 exports.addNewProd = function (req, res) {
-  console.log('add')
+  //Save to DB
+  //Ajax status code 200
+  var productInfo = req.body; //Get the parsed information
+  if (!productInfo.title || !productInfo.imagePoster || !productInfo.price || !productInfo.stock) {
+    res.json({
+      message: "Sorry, you provided worng info",
+      type: "error"
+    });
+  } else {
+    let newProd = new Product({
+      title: req.body.title,
+      imagePoster: req.body.imagePoster,
+      imagesSlider: req.body.imagesSlider,
+      trailerGame: req.body.trailerGame,
+      description: req.body.description,
+      price: req.body.price,
+      genre: req.body.genre,
+      platform: req.body.platform,
+      stock: req.body.stock
+    });
+    newProd.save(function (err, Product) {
+      if (err)
+        res.json({
+          message: "Database error",
+          type: "error"
+        });
+      else
+        res.json(productInfo)
+    });
+  }
 }
 
 //Edit product
