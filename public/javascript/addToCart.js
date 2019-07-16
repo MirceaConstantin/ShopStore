@@ -9,8 +9,8 @@ if (document.readyState !== 'loading') {
 
 window.addEventListener('DOMContentLoaded', () => {
   updateQtyCart()
-  editAndUpdate();
   addNewProd();
+  editListener();
 });
 
 function updateQtyCart() {
@@ -106,6 +106,7 @@ function addToCart(id, title, poster) {
 //Add new product
 function addNewProd() {
   document.querySelector('#addNewProd').addEventListener('click', function () {
+    event.preventDefault();
     let title = document.querySelector('[name="title"]').value;
     let imagePoster = document.querySelector('[name="imagePoster"]').value;
     let imagesSlider = document.querySelector('[name="imagesSlider"]').value;
@@ -128,33 +129,28 @@ function addNewProd() {
     }
     fetch('/admin', {
         method: 'POST',
-        data: JSON.stringify(obj)
+        body: JSON.stringify(obj),
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
       })
-      .then(res => console.log(res))
-      .then((data) => {
-        console.log(data)
-      })
+      .then(res => res.json())
   })
 }
 
 //Edit function
-function editAndUpdate() {
-  let edit = document.querySelectorAll('.editProduct')
-  for (let i = 0; i < edit.length; i++) {
-    edit[i].addEventListener('click', () => {
-      console.log(i, 'edit')
-    })
-  }
-}
-
 function editAjax(id) {
-  fetch(`api/${id}`, {
+  fetch(`/api/${id}`, {
       method: 'GET'
     })
-    .then(res => res)
+    .then(res => res.json())
     .then((data) => {
-      console.log(data)
+      editListener(data)
     })
+}
+
+function editListener(data) {
+  console.log(data)
 }
 
 //Delete with Ajax

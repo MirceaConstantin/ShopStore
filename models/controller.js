@@ -60,50 +60,40 @@ exports.adminPath = function (req, res) {
 exports.addNewProd = function (req, res) {
   //Save to DB
   //Ajax status code 200
-  var productInfo = req.body; //Get the parsed information
-  if (!productInfo.title || !productInfo.imagePoster || !productInfo.price || !productInfo.stock) {
-    res.json({
-      message: "Sorry, you provided worng info",
-      type: "error"
-    });
-  } else {
-    let newProd = new Product({
-      title: req.body.title,
-      imagePoster: req.body.imagePoster,
-      imagesSlider: req.body.imagesSlider,
-      trailerGame: req.body.trailerGame,
-      description: req.body.description,
-      price: req.body.price,
-      genre: req.body.genre,
-      platform: req.body.platform,
-      stock: req.body.stock
-    });
-    newProd.save(function (err, Product) {
-      if (err)
-        res.json({
-          message: "Database error",
-          type: "error"
-        });
-      else
-        res.json(productInfo)
-    });
-  }
+  let newProd = new Product({
+    title: req.body.title,
+    imagePoster: req.body.imagePoster,
+    imagesSlider: req.body.imagesSlider,
+    trailerGame: req.body.trailerGame,
+    description: req.body.description,
+    price: req.body.price,
+    genre: req.body.genre,
+    platform: req.body.platform,
+    stock: req.body.stock
+  });
+  newProd.save(function (err, newProd) {
+    if (err)
+      res.json({
+        message: "Database error",
+        type: "error"
+      });
+    else
+      res.json(newProd)
+  });
 }
+
 
 //Edit product
 exports.editProd = function (req, res) {
-  //Try to get req.body to send on the front end
-  let query = {
+  let myQuery = {
     _id: req.params.prodID
   }
-  Product.findOneAndUpdate(query, (err, editProd) => {
-    let productChunks = [];
-    let chunkSize = 9;
-    for (let i = 0; i < editProd.length; i += chunkSize) {
-      productChunks.push(editProd.slice(i, i + chunkSize))
-    }
-    console.log(editProd)
-    res.json(editProd)
+  Product.findByIdAndUpdate(myQuery, req.body, {
+    new: true
+  }, function (err, prod) {
+    if (err)
+      res.send(err);
+    res.json(prod);
   })
 }
 
