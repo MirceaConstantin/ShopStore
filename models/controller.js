@@ -82,13 +82,12 @@ exports.addNewProd = function (req, res) {
   });
 }
 
-
 //Edit product
 exports.editProd = function (req, res) {
   let myQuery = {
     _id: req.params.prodID
   }
-  Product.findByIdAndUpdate(myQuery, req.body, {
+  Product.findById(myQuery, req.body, {
     new: true
   }, function (err, prod) {
     if (err)

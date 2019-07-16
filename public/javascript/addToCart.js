@@ -10,7 +10,6 @@ if (document.readyState !== 'loading') {
 window.addEventListener('DOMContentLoaded', () => {
   updateQtyCart()
   addNewProd();
-  editListener();
 });
 
 function updateQtyCart() {
@@ -139,18 +138,23 @@ function addNewProd() {
 }
 
 //Edit function
-function editAjax(id) {
+function editAjax(id, index) {
   fetch(`/api/${id}`, {
       method: 'GET'
     })
     .then(res => res.json())
     .then((data) => {
-      editListener(data)
+      let prodEdit = document.querySelectorAll(`.prodEdit-${index}`)
+      prodEdit[0].value = data.title;
+      prodEdit[1].value = data.imagePoster;
+      prodEdit[2].value = data.imagesSlider;
+      prodEdit[3].value = data.trailerGame;
+      prodEdit[4].value = data.description;
+      prodEdit[5].value = data.price;
+      prodEdit[6].value = data.genre;
+      prodEdit[7].value = data.platform;
+      prodEdit[8].value = data.stock;
     })
-}
-
-function editListener(data) {
-  console.log(data)
 }
 
 //Delete with Ajax
