@@ -10,6 +10,12 @@ const mongoDB = require('mongoose');
 
 const app = express();
 
+/* mongoDB.connect('mongodb+srv://shopAdmin:shopAdmin@myshopproducts-huk3f.mongodb.net/myShop', {
+    useNewUrlParser: true
+}); */
+
+// mongoose instance connection url connection
+mongoDB.Promise = global.Promise;
 mongoDB.connect('mongodb+srv://shopAdmin:shopAdmin@myshopproducts-huk3f.mongodb.net/myShop', {
     useNewUrlParser: true
 });
