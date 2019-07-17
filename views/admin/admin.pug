@@ -1,8 +1,7 @@
 include ../layouts/layout.pug
 
 block admin
-  .container
-    div(id="notice" style="position: fixed; right: 0; z-index: 9999;" onload=`removeAdminPopUp("${message}")`)
+  .container#container
     div(class="mt-1 mt-xl-1 mt-lg-1 mt-md-1 mt-sm-1table-responsive" id="adminPanel")
       div(class="card mb-1")
         div( class="card-header")
@@ -82,4 +81,4 @@ block admin
                     div( class="input-group mb-2")
                       input(type="number" class=`form-control prodEdit-${i}` name="stock" placeholder="Add stock" aria-label="Add stock" aria-describedby="button-addon2")
                     div( class="input-group")            
-                      button(class="btn btn-success w-100 mr-0" id="editSubmit" type="submit") Submit
+                      button(class="btn btn-success w-100 mr-0" id=`editSubmit-${i}` type="submit") Submit

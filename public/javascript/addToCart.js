@@ -1,16 +1,26 @@
-if (document.readyState !== 'loading') {
-  console.log('document is already ready, just execute code here');
-
-} else {
-  document.addEventListener('DOMContentLoaded', function () {
-    console.log('document was not ready, place code here');
-  });
-}
+window.addEventListener('load', () => {
+  let contaienr = document.querySelector('#container')
+  let navBar = document.querySelector('#navBar')
+  contaienr.style.display = 'block'
+  navBar.style.display = 'block'
+  preload();
+})
 
 window.addEventListener('DOMContentLoaded', () => {
+  let contaienr = document.querySelector('#container')
+  let navBar = document.querySelector('#navBar')
+  contaienr.style.display = 'none'
+  navBar.style.display = 'none'
   updateQtyCart()
   addNewProd();
 });
+
+function preload() {
+  let load = document.querySelector('#load');
+  let text = document.querySelector('#text');
+  load.style.display = 'none';
+  text.style.display = 'none';
+}
 
 function updateQtyCart() {
   let badgeCart = document.querySelectorAll('.badgeCart');
@@ -144,17 +154,41 @@ function editAjax(id, index) {
     })
     .then(res => res.json())
     .then((data) => {
-      let prodEdit = document.querySelectorAll(`.prodEdit-${index}`)
-      prodEdit[0].value = data.title;
-      prodEdit[1].value = data.imagePoster;
-      prodEdit[2].value = data.imagesSlider;
-      prodEdit[3].value = data.trailerGame;
-      prodEdit[4].value = data.description;
-      prodEdit[5].value = data.price;
-      prodEdit[6].value = data.genre;
-      prodEdit[7].value = data.platform;
-      prodEdit[8].value = data.stock;
+      editObject(data, index)
     })
+}
+
+function editObject(data, index) {
+  let prodEdit = document.querySelectorAll(`.prodEdit-${index}`)
+  let id = data._id
+  prodEdit[0].value = data.title;
+  prodEdit[1].value = data.imagePoster;
+  prodEdit[2].value = data.imagesSlider;
+  prodEdit[3].value = data.trailerGame;
+  prodEdit[4].value = data.description;
+  prodEdit[5].value = data.price;
+  prodEdit[6].value = data.genre;
+  prodEdit[7].value = data.platform;
+  prodEdit[8].value = data.stock;
+  putEditedProds(index)
+}
+
+function putEditedProds(index) {
+  document.querySelector(`#editSubmit-${index}`).addEventListener('click', () => {
+    let prodEdit = document.querySelectorAll(`.prodEdit-${index}`)
+    let editedProd = {
+      title: prodEdit[0].value,
+      imagePoster: prodEdit[1].value,
+      imagesSlider: prodEdit[2].value.split(/ *[,;]+ */g),
+      trailerGame: prodEdit[3].value.replace("watch\?v=", "embed/"),
+      description: prodEdit[4].value,
+      price: prodEdit[5].value,
+      genre: prodEdit[6].value.split(/ *[,;]+ */g),
+      platform: prodEdit[7].value.split(/ *[,;]+ */g),
+      stock: prodEdit[8].value
+    }
+    console.log(editedProd)
+  })
 }
 
 //Delete with Ajax

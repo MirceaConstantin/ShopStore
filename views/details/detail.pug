@@ -1,14 +1,14 @@
 include ../layouts/layout.pug
 
 block details
-  <!--DACA E TIMP BACKGROUD IMAGE CU POSTERUL DE LA JOC -->
-  .container
+  //- DACA E TIMP BACKGROUD IMAGE CU POSTERUL DE LA JOC
+  .container#container
     div(id="notice" style="position: fixed; right: 0; z-index: 9999;")
     div(class="media row mt-1")
       div(class="h-100 col-12 pl-0 pr-0")
         h4(class="mt-0") 
           strong #{product.title}
-            <!-- /.col-lg-8 -->
+          //- col-lg-8
           div(class="float-right ")
             span(class="badge badge-info") #{product.price} $
         each genre in product.genre
@@ -19,14 +19,14 @@ block details
         input(id="qty" type="number" class="float-right mr-1 form-control" value=1 aria-describedby="button-addon2")
         each platform in product.platform
           span(class="badge mr-1 badge-info") #{platform}
-    <!-- Video and Details -->
+    //- Video and Details
     div(class="media row pt-1")
       div(class="h-100 w-50")
         div(class="embed-responsive rounded embed-responsive-16by9")
           iframe(class="embed-responsive-item" allowfullscreen src= product.trailerGame)
       div(class="media-body m-0 pl-1")
         div(class="h-100")
-          <!-- Carousel -->
+          //- Carousel
           div(id="demo" class="carousel slide mb-1 pt-0 carousel-fade" data-ride="carousel")
             ul(class="carousel-indicators")
               each image, i in product.imagesSlider
