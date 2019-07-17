@@ -19,7 +19,7 @@ router.route('/admin')
 //POST / PUT / DELETE
 router.route('/api/:prodID')
   .get(products.editProd)
-  //.put(products.editProd)
+  .put(products.updateProd)
   .delete(products.deleteProd)
 
 //Details Router

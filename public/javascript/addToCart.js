@@ -144,6 +144,26 @@ function addNewProd() {
         })
       })
       .then(res => res.json())
+      .then((data) => {
+        let noticeAdmin = document.querySelector('#noticeAdmin');
+        let notificationTitle = document.createElement('div');
+        notificationTitle.classList.add("noticePanel")
+        notificationTitle.innerHTML = `
+      <div class="media">
+        <img class="mr-3" src=${data.imagePoster} style="width: 20%;">
+        <div class="media-body mt-0">
+          <h5 class="mt-0 mb-3">${data.title}</h5>
+          <span>New produt added.</span>
+        </div>
+        </div>`
+        noticeAdmin.appendChild(notificationTitle)
+        setTimeout(() => {
+          notificationTitle.remove();
+        }, 5000);
+        setTimeout(() => {
+          location.reload()
+        }, 3500);
+      })
   })
 }
 
@@ -154,27 +174,23 @@ function editAjax(id, index) {
     })
     .then(res => res.json())
     .then((data) => {
-      editObject(data, index)
+      let prodEdit = document.querySelectorAll(`.prodEdit-${index}`)
+      prodEdit[0].value = data.title;
+      prodEdit[1].value = data.imagePoster;
+      prodEdit[2].value = data.imagesSlider;
+      prodEdit[3].value = data.trailerGame;
+      prodEdit[4].value = data.description;
+      prodEdit[5].value = data.price;
+      prodEdit[6].value = data.genre;
+      prodEdit[7].value = data.platform;
+      prodEdit[8].value = data.stock;
+      putEditedProds(id, index)
     })
 }
 
-function editObject(data, index) {
-  let prodEdit = document.querySelectorAll(`.prodEdit-${index}`)
-  let id = data._id
-  prodEdit[0].value = data.title;
-  prodEdit[1].value = data.imagePoster;
-  prodEdit[2].value = data.imagesSlider;
-  prodEdit[3].value = data.trailerGame;
-  prodEdit[4].value = data.description;
-  prodEdit[5].value = data.price;
-  prodEdit[6].value = data.genre;
-  prodEdit[7].value = data.platform;
-  prodEdit[8].value = data.stock;
-  putEditedProds(index)
-}
-
-function putEditedProds(index) {
+function putEditedProds(id, index) {
   document.querySelector(`#editSubmit-${index}`).addEventListener('click', () => {
+    console.log(id, index)
     let prodEdit = document.querySelectorAll(`.prodEdit-${index}`)
     let editedProd = {
       title: prodEdit[0].value,
@@ -188,6 +204,11 @@ function putEditedProds(index) {
       stock: prodEdit[8].value
     }
     console.log(editedProd)
+    fetch(`/api/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(editedProd)
+      }).then(res => res.json())
+      .then(data => console.log('Fetch data: ', data))
   })
 }
 
@@ -196,10 +217,30 @@ function deleteProd(id, index) {
   fetch(`/api/${id}`, {
       method: 'DELETE'
     })
-    .then(res => res)
-    .then(() => {
+    .then(res => res.json())
+    .then((data) => {
+      console.log(data)
       let prodTr = document.querySelector(`[data-id="${index}"]`);
       prodTr.nextSibling.remove();
       prodTr.remove();
+
+      let noticeAdmin = document.querySelector('#noticeAdmin');
+      let notificationTitle = document.createElement('div');
+      notificationTitle.classList.add("noticePanel")
+      notificationTitle.innerHTML = `
+      <div class="media">
+        <img class="mr-3" src=${data.imagePoster} style="width: 20%;">
+        <div class="media-body mt-0">
+          <h5 class="mt-0 mb-3">${data.title}</h5>
+          <span>Product deleted.</span>
+        </div>
+        </div>`
+      noticeAdmin.appendChild(notificationTitle)
+      setTimeout(() => {
+        notificationTitle.remove()
+      }, 5000)
+      setTimeout(() => {
+        location.reload()
+      }, 3500);
     })
 }

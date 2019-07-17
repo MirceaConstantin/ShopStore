@@ -9,7 +9,7 @@ exports.allProd = function (req, res) {
       productChunks.push(prod.slice(i, i + chunkSize))
     }
     res.render('shop/index', {
-      title: 'Bazarul de joaca',
+      title: 'Cutia cu jucarii',
       products: prod
     })
   });
@@ -96,6 +96,33 @@ exports.editProd = function (req, res) {
   })
 }
 
+exports.updateProd = function (req, res) {
+  console.log(req.params)
+  let myQuery = {
+    _id: req.params.prodID
+  }
+  console.log(myQuery)
+  let newProd = {
+    title: req.body.title,
+    imagePoster: req.body.imagePoster,
+    imagesSlider: req.body.imagesSlider,
+    trailerGame: req.body.trailerGame,
+    description: req.body.description,
+    price: req.body.price,
+    genre: req.body.genre,
+    platform: req.body.platform,
+    stock: req.body.stock
+  };
+  Product.findByIdAndUpdate(myQuery, req.body, {
+    new: true
+  }, function (err, prod) {
+    console.log(prod)
+    if (err)
+      res.send(err);
+    res.json(prod)
+  })
+}
+
 //Delete product
 exports.deleteProd = function (req, res) {
   let myQuery = {
@@ -104,6 +131,6 @@ exports.deleteProd = function (req, res) {
   Product.findOneAndDelete(myQuery, (err, obj) => {
     if (err)
       res.send(err);
-    res.json(myQuery)
+    res.json(obj)
   })
 };
