@@ -97,23 +97,10 @@ exports.editProd = function (req, res) {
 }
 
 exports.updateProd = function (req, res) {
-  console.log(req.params)
-  let myQuery = {
+  console.log(req.body)
+  Product.findByIdAndUpdate({
     _id: req.params.prodID
-  }
-  console.log(myQuery)
-  let newProd = {
-    title: req.body.title,
-    imagePoster: req.body.imagePoster,
-    imagesSlider: req.body.imagesSlider,
-    trailerGame: req.body.trailerGame,
-    description: req.body.description,
-    price: req.body.price,
-    genre: req.body.genre,
-    platform: req.body.platform,
-    stock: req.body.stock
-  };
-  Product.findByIdAndUpdate(myQuery, req.body, {
+  }, req.body, {
     new: true
   }, function (err, prod) {
     console.log(prod)
