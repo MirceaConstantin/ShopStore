@@ -23,7 +23,7 @@ mongoDB.connect('mongodb+srv://shopAdmin:shopAdmin@myshopproducts-huk3f.mongodb.
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use(favicon('public/favIcon.png'));
+app.use(favicon('public/ico.svg'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
