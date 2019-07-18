@@ -1,56 +1,32 @@
 include ../layouts/layout.pug
 
 block cart
+  //- Ajax
+  link(rel="stylesheet", href="/stylesheets/cart.css")
   .container#container
-    //- Ajax
-    div(class="mt-1 mt-xl-1 mt-lg-1 mt-md-1 mt-sm-1 row")
-      table(class="table table-hover w-75" id="dataTable" cellspacing="0")
-        thead
-          tr(class="table-primary")
-            th(id="adminPositionItems" scope="col") #
-            th(class="text-center adminPoster" scope="col") Poster
-            th(scope="col") Title
-            th(class="adminPrice" scope="col") Price
-            th(class="adminStock" scope="col") Quantity
-            th(class="adminEdit" scope="col") Total
-        tbody
-          tr
-            th(class="text-center align-middle" scope="row") 1
-            td(class="text-center align-middle" scope="row")
-              img(class="cartPoster align-middle" src="#")
-            td(class="align-middle" scope="row") Title
-            td(class="cartPrice align-middle" scope="row") $
-            td(class="cartQuantity align-middle" scope="row")
-              input(class="quantityInput" type="number")
-            td(class="cartTotal align-middle" scope="row") $
-          tr(class="table-success")
-            th(class="text-center align-middle" scope="row") 1
-            td(class="text-center align-middle" scope="row")
-              img(class="cartPoster align-middle" src="#")
-            td(class="align-middle" scope="row") Title
-            td(class="cartPrice align-middle" scope="row") $
-            td(class="cartQuantity align-middle" scope="row")
-              input(class="quantityInput" value=1 type="number")
-            td(class="cartTotal align-middle" scope="row") $
-      div(class="w-25 pl-1")
-        table(class="table table-hover")
-          thead
-            tr(class="table-primary")
-              th(colspan="3" scope="col") Your shopping list
-              th
-                span(class="badgeCart badge float-right badge-light")
-          tfoot
-            tr(class="table-primary")
-              th(colspan="3" scope="col") Total price
-              th
-                span(class="badge float-right badge-light") 250 $
-          tbody
-            tr
-              td(colspan="2") Title
-              td Price
-              td(class="float-right") Quantity
-            tr
-              td(colspan="2") Title
-              td Price
-              td(class="float-right") Quantity
+    div(class="cartContainer")
+      section(id="cart")
+        article(class="product")
+          header
+            a(class="remove")
+              img(src="http://www.astudio.si/preview/blockedwp/wp-content/uploads/2012/08/1.jpg" alt="")
+              h3 Remove product
+          div(class="cartContent")
+            h1 Lorem ipsum Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque.
+          footer(class="cartContent")
+            span(class="qt-minus") -
+            span(class="qt") 2
+            span(class="qt-plus") +
+            h2(class="full-price") 29.98€
+            h2(class="price") 14.99€
+    div(id="site-footer")
+      div(class="container cartClearfix")
 
+        div(class="float-left")
+          h2(class="subtotal") Subtotal: 
+            span 163.96 €
+
+        div(class="float-right")
+          h1(class="total") Total: 
+            span 177.16€
+          a(class="checkOutBtn") Checkout
