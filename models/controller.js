@@ -97,17 +97,19 @@ exports.editProd = function (req, res) {
 }
 
 exports.updateProd = function (req, res) {
-  console.log(req.body)
-  Product.findByIdAndUpdate({
+  let myQuery = {
     _id: req.params.prodID
-  }, req.body, {
-    new: true
-  }, function (err, prod) {
-    console.log(prod)
-    if (err)
-      res.send(err);
-    res.json(prod)
-  })
+  }
+  Product.findOneAndUpdate(myQuery, req.body, {
+      useFindAndModify: false
+    },
+    () => {
+      Product.findById(myQuery, (err, prod) => {
+        if (err)
+          res.send(err);
+        res.send(prod)
+      })
+    })
 }
 
 //Delete product
@@ -115,7 +117,9 @@ exports.deleteProd = function (req, res) {
   let myQuery = {
     _id: req.params.prodID
   }
-  Product.findOneAndDelete(myQuery, (err, obj) => {
+  Product.findOneAndDelete(myQuery, {
+    useFindAndModify: false
+  }, (err, obj) => {
     if (err)
       res.send(err);
     res.json(obj)
