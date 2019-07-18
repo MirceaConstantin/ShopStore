@@ -44,4 +44,4 @@ block index
               p(class="card-text") #{product.price} $
             div(class="card-footer bg-dark")
               a(href=`/${product.title}` class="btn btn-info mr-1") Details
-              a(id="addToCart" onclick=`addToCart("${product._id}", "${product.title}", "${product.imagePoster}")` class="text-white btn btn-success") Add to cart
+              a(id="addToCart" onclick=`addToCart("${product._id}", "${product.title}", "${product.imagePoster}", "${product.price}")` class="text-white btn btn-success") Add to cart

@@ -29,9 +29,9 @@ function addNewProd() {
     fetch('/admin', {
         method: 'POST',
         body: JSON.stringify(obj),
-        headers: new Headers({
+        headers: {
           'Content-Type': 'application/json'
-        })
+        }
       })
       .then(res => res.json())
       .then((data) => {
@@ -109,7 +109,7 @@ function putEditedProds(id, index) {
         <img class="mr-3" src=${data.imagePoster} style="width: 20%;">
         <div class="media-body mt-0">
           <h5 class="mt-0 mb-3">${data.title}</h5>
-          <span>Product have been updated.</span>
+          <span>Product hase been updated.</span>
         </div>
         </div>`
         noticeAdmin.appendChild(notificationTitle)

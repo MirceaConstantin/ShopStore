@@ -15,22 +15,17 @@ exports.allProd = function (req, res) {
   });
 };
 
-//Details Path
+//Cart Path
 exports.cartProd = function (req, res) {
-  Product.find((err, cartItems) => {
-    let productChunks = [];
-    let chunkSize = 9;
-    for (let i = 0; i < cartItems.length; i += chunkSize) {
-      productChunks.push(cartItems.slice(i, i + chunkSize))
-    }
-    res.render('shop/cart', {
-      title: 'Cart',
-      cartProd: cartItems
-    })
+  res.render('shop/cart', {
+    title: 'Cart',
+    data: prod
   })
 };
 
-//Cart Path
+
+
+//Details Path
 exports.detailsProd = function (req, res) {
   Product.find({
     title: `${req.params.title}`

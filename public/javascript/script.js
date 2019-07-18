@@ -77,7 +77,7 @@ function removeAdminPopUp(message) {
   }
 }
 
-function addToCart(id, title, poster) {
+function addToCart(id, title, poster, price) {
   let qty = document.querySelector('#qty');
   if (qty == undefined) {
     qty = 1;
@@ -87,7 +87,9 @@ function addToCart(id, title, poster) {
   let cart = {
     productID: id,
     productTitle: title,
-    qty: qty
+    qty: qty,
+    price: price,
+    productPoster: poster
   }
   if (localStorage.getItem('myCart')) {
     let checkGame = false;
