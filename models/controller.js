@@ -18,12 +18,9 @@ exports.allProd = function (req, res) {
 //Cart Path
 exports.cartProd = function (req, res) {
   res.render('shop/cart', {
-    title: 'Cart',
-    data: prod
+    title: 'Cart'
   })
 };
-
-
 
 //Details Path
 exports.detailsProd = function (req, res) {

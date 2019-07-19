@@ -53,29 +53,45 @@ function draw() {
   footer.firstChild.innerHTML = footerCart;
 }
 
-/*
 var check = false;
 
 function changeVal(el) {
-  var qt = parseFloat(el.parent().children(".qt").html());
-  var price = parseFloat(el.parent().children(".price").html());
+
+  var qt = parseFloat(
+    el
+    .parent()
+    .children(".qt")
+    .html()
+  );
+  var price = parseFloat(
+    el
+    .parent()
+    .children(".price")
+    .html()
+  );
   var eq = Math.round(price * qt * 100) / 100;
 
-  el.parent().children(".full-price").html(eq + "€");
+  el
+    .parent()
+    .children(".full-price")
+    .html(eq + "€");
 
   changeTotal();
 }
 
 function changeTotal() {
-
   var price = 0;
 
   $(".full-price").each(function (index) {
-    price += parseFloat($(".full-price").eq(index).html());
+    price += parseFloat(
+      $(".full-price")
+      .eq(index)
+      .html()
+    );
   });
 
   price = Math.round(price * 100) / 100;
-  var tax = Math.round(price * 0.05 * 100) / 100
+  var tax = Math.round(price * 0.05 * 100) / 100;
   var shipping = parseFloat($(".shipping span").html());
   var fullPrice = Math.round((price + tax + shipping) * 100) / 100;
 
@@ -89,61 +105,83 @@ function changeTotal() {
 }
 
 $(document).ready(function () {
+  let removeBtn = document.querySelectorAll('.remove');
+  for (let i = 0; i < removeBtn.length; i++) {
+    removeBtn[i].addEventListener('click', () => {
+      let remove = removeBtn[i];
+      remove.parentNode.parentNode.classList.add("remove");
+      window.setTimeout(() => {
+        remove.parentNode.parentNode.slideUp("fast", () => {
+          remove.parentNode.parentNode.remove;
+          //If product == 0
+        })
+      }, 200)
+    })
+  }
+
 
   $(".remove").click(function () {
     var el = $(this);
-    el.parent().parent().addClass("removed");
-    window.setTimeout(
-      function () {
-        el.parent().parent().slideUp('fast', function () {
-          el.parent().parent().remove();
+    el
+      .parent()
+      .parent()
+      .addClass("removed");
+    window.setTimeout(function () {
+      el
+        .parent()
+        .parent()
+        .slideUp("fast", function () {
+          el
+            .parent()
+            .parent()
+            .remove();
           if ($(".product").length == 0) {
             if (check) {
-              $("#cart").html("<h1>The shop does not function, yet!</h1><p>If you liked my shopping cart, please take a second and heart this Pen on <a href='https://codepen.io/ziga-miklic/pen/xhpob'>CodePen</a>. Thank you!</p>");
+              $("#cart").html(
+                "<h1>The shop does not function, yet!</h1><p>If you liked my shopping cart, please take a second and heart this Pen on <a href='https://codepen.io/ziga-miklic/pen/xhpob'>CodePen</a>. Thank you!</p>"
+              );
             } else {
               $("#cart").html("<h1>No products!</h1>");
             }
           }
           changeTotal();
         });
-      }, 200);
+    }, 200);
   });
 
-  $(".qt-plus").click(function () {
-    $(this).parent().children(".qt").html(parseInt($(this).parent().children(".qt").html()) + 1);
+  //Plus Button
+  let plusBtn = document.querySelectorAll('.qt-plus');
+  for (let i = 0; i < plusBtn.length; i++) {
+    plusBtn[i].addEventListener('click', () => {
+      let plus = plusBtn[i];
+      parseInt(plus.parentNode.children[i].innerHTML)
+      plus.parentNode.children[i + 2].classList.add('added')
+      window.setTimeout(() => {
+        plus.parentNode.children[i + 2].classList.remove('added')
+        //changeVal(plus)
+      }, 150)
+    })
+  }
 
-    $(this).parent().children(".full-price").addClass("added");
+  //Minus Button
+  let minusBtn = document.querySelectorAll('.qt-minus');
+  for (let i = 0; i < minusBtn.length; i++) {
+    minusBtn[i].addEventListener('click', () => {
+      let minus = minusBtn[i].parentNode.children[i];
+      if (parseInt(minus.innerHTML) > 1) {
+        minus.innerHTML = parseInt(minus.innerHTML) - 1
+      }
+      minus.parentNode.children[i + 2].classList.add('minused')
+      window.setTimeout(() => {
+        minus.parentNode.children[i + 2].classList.remove('minused')
+        //changeVal(minus)
+      }, 150)
+      console.log(minus)
+    })
+  }
 
-    var el = $(this);
-    window.setTimeout(function () {
-      el.parent().children(".full-price").removeClass("added");
-      changeVal(el);
-    }, 150);
-  });
-
-  $(".qt-minus").click(function () {
-
-    child = $(this).parent().children(".qt");
-
-    if (parseInt(child.html()) > 1) {
-      child.html(parseInt(child.html()) - 1);
-    }
-
-    $(this).parent().children(".full-price").addClass("minused");
-
-    var el = $(this);
-    window.setTimeout(function () {
-      el.parent().children(".full-price").removeClass("minused");
-      changeVal(el);
-    }, 150);
-  });
-
-  window.setTimeout(function () {
-    $(".is-open").removeClass("is-open")
-  }, 1200);
-
-  $(".checkOutBtn").click(function () {
-    check = true;
-    $(".remove").click();
-  });
-});*/
+  /*   $(".btn").click(function () {
+      check = true;
+      $(".remove").click();
+    }); */
+});
