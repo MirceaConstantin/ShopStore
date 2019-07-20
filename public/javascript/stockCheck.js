@@ -53,30 +53,31 @@ function draw() {
   footer.firstChild.innerHTML = footerCart;
 }
 
-var check = false;
+let check = false;
 
 function changeVal(el) {
-
-  var qt = parseFloat(
+  let qt = parseFloat()
+  console.log(el.parentNode.children[4].innerHTML)
+  /* var qt = parseFloat(
     el
     .parent()
     .children(".qt")
     .html()
-  );
-  var price = parseFloat(
+  ); */
+  /*   var price = parseFloat(
+      el
+      .parent()
+      .children(".price")
+      .html()
+    ); */
+  /*   var eq = Math.round(price * qt * 100) / 100;
+
     el
-    .parent()
-    .children(".price")
-    .html()
-  );
-  var eq = Math.round(price * qt * 100) / 100;
+      .parent()
+      .children(".full-price")
+      .html(eq + "€");
 
-  el
-    .parent()
-    .children(".full-price")
-    .html(eq + "€");
-
-  changeTotal();
+    changeTotal(); */
 }
 
 function changeTotal() {
@@ -158,7 +159,7 @@ $(document).ready(function () {
       plus.parentNode.children[i + 2].classList.add('added')
       window.setTimeout(() => {
         plus.parentNode.children[i + 2].classList.remove('added')
-        //changeVal(plus)
+        changeVal(plus)
       }, 150)
     })
   }
@@ -174,9 +175,9 @@ $(document).ready(function () {
       minus.parentNode.children[i + 2].classList.add('minused')
       window.setTimeout(() => {
         minus.parentNode.children[i + 2].classList.remove('minused')
-        //changeVal(minus)
+        changeVal(minus)
       }, 150)
-      console.log(minus)
+      //console.log(minus)
     })
   }
 

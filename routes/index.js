@@ -15,7 +15,6 @@ router.route('/admin')
   .get(products.adminPath)
   .post(products.addNewProd)
 
-
 //POST / PUT / DELETE
 router.route('/api/:prodID')
   .get(products.editProd)

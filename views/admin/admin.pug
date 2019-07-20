@@ -56,11 +56,11 @@ block admin
               td(class="adminStock align-middle" scope="row") #{item.stock}
               td(class="adminEdit align-middle" scope="row")
                 a(class="btn btn-light editProduct" onclick=`editAjax("${item._id}", ${i})` data-toggle="collapse" href=`#editProduct-${i+1}` role="button" aria-expanded="false" aria-controls="editProduct")              
-                  i(href="#" class="fas fa-pencil-alt")
+                  i(class="fas fa-pencil-alt")
               td(class="adminDelete align-middle" scope="row")
                 button(class="btn btn-danger" onclick=`deleteProd("${item._id}", "${i}")`)
                   i(class="fas fa-trash-alt")
-            tr(class="editProductPanel")
+            tr(class="editProductPanel d-none")
               td(colspan="8")
                 div(class="collapse" id=`editProduct-${i+1}`)
                   div(class="card-body p-1")
