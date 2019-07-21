@@ -57,7 +57,6 @@ function createPopUp(title, qty, poster) {
 }
 
 function removeAdminPopUp(message) {
-  console.log(message)
   let notificationArea = document.querySelector('#notice');
   if (message == undefined) {
     notificationArea.innerHTML = ''
