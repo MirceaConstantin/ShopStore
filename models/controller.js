@@ -23,16 +23,24 @@ exports.cartProd = function (req, res) {
 };
 
 exports.checkOut = function (req, res) {
-  console.log(req.body)
-  req.body.forEach(items => {
-    Product.findById(items.productID, (err, item) => {
-      let prod = item._id
-      if (prod) {
-        item.stock -= items.qty
+  //console.log(req.body.productID)
+  //FIXME:
+  let notInStock = [];
+  for (let i = 0; i < req.body.length; i++) {
+    Product.findById({
+      _id: req.body[i].productID
+    }, (err, item) => {
+      if (req.body[i].qty <= item.stock) {
+        item.stock -= req.body[i].qty;
+      } else {
+        notInStock.push(req.body[i]);
       }
-      res.json(item)
     })
-  });
+    item.save()
+  }
+  res.json(
+    JSON.stringify(notInStock)
+  )
 }
 
 //Details Path

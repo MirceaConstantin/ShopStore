@@ -106,7 +106,13 @@ function postCart() {
         }
       })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then((data) => {
+        let cart = document.querySelector('#cart');
+        cart.innerHTML = data;
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 5000);
+      })
+    localStorage.clear()
   })
-
 }
