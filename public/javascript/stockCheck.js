@@ -53,13 +53,13 @@ function draw() {
     `
   cart.innerHTML = html;
   footer.firstChild.innerHTML = footerCart;
-  plus(myCart)
-  minus(myCart)
+  plus()
+  minus()
+  postCart()
 }
 
 function plus() {
   //Plus Button
-  let myCart = JSON.parse(localStorage.getItem('myCart'))
   let plusBtn = document.querySelectorAll('.qt-plus');
   for (let i = 0; i < plusBtn.length; i++) {
     plusBtn[i].addEventListener('click', () => {
@@ -93,75 +93,20 @@ function minus() {
   }
 }
 
-function slideUp() {}
-
-function slideRight() {}
-
-function remove() {
-  let remove = document.querySelectorAll('.remove');
-  for (let i = 0; i < remove.length; i++) {
-    remove[i].addEventListener('click', () => {
-      remove[i].parentNode.parentNode.classList.add('.removed');
-      window.setTimeout(() => {
-        console.log('click')
+function postCart() {
+  let checkOutBtn = document.querySelector('.checkOutBtn');
+  let myCart = localStorage.getItem('myCart')
+  checkOutBtn.addEventListener('click', () => {
+    event.preventDefault();
+    fetch('/cart', {
+        method: 'POST',
+        body: myCart,
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
-    })
-  }
-  $(".remove").click(function () {
-    var el = $(this);
-    el.parent().parent().addClass("removed");
-    window.setTimeout(
-      function () {
-        el.parent().parent().slideUp('fast', function () {
-          el.parent().parent().remove();
-          if ($(".product").length == 0) {
-            if (check) {
-              $("#cart").html("<h1>The shop does not function, yet!</h1><p>If you liked my shopping cart, please take a second and heart this Pen on <a href='https://codepen.io/ziga-miklic/pen/xhpob'>CodePen</a>. Thank you!</p>");
-            } else {
-              $("#cart").html("<h1>No products!</h1>");
-            }
-          }
-          changeTotal();
-        });
-      }, 200);
-  });
+      .then(res => res.json())
+      .then(data => console.log(data))
+  })
+
 }
-
-var check = false;
-
-function changeVal(el) {
-  var qt = parseFloat(el.parent().children(".qt").html());
-  var price = parseFloat(el.parent().children(".price").html());
-  var eq = Math.round(price * qt * 100) / 100;
-
-  el.parent().children(".full-price").html(eq + "€");
-
-  changeTotal();
-}
-
-function changeTotal() {
-
-  var price = 0;
-
-  $(".full-price").each(function (index) {
-    price += parseFloat($(".full-price").eq(index).html());
-  });
-
-  price = Math.round(price * 100) / 100;
-  var tax = Math.round(price * 0.05 * 100) / 100
-  var shipping = parseFloat($(".shipping span").html());
-  var fullPrice = Math.round((price + tax + shipping) * 100) / 100;
-
-  if (price == 0) {
-    fullPrice = 0;
-  }
-
-  $(".subtotal span").html(price);
-  $(".tax span").html(tax);
-  $(".total span").html(fullPrice);
-}
-
-$(document).ready(function () {
-
-
-});

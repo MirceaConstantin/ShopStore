@@ -9,6 +9,7 @@ router.route('/')
 //Cart router
 router.route('/cart')
   .get(products.cartProd)
+  .post(products.checkOut)
 
 //Admin page GET / POST / PUT / DELETE
 router.route('/admin')

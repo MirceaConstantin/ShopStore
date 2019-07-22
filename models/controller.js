@@ -4,7 +4,7 @@ let Product = require('./product');
 exports.allProd = function (req, res) {
   Product.find((err, prod) => {
     let productChunks = [];
-    let chunkSize = 9;
+    let chunkSize = 8;
     for (let i = 0; i < prod.length; i += chunkSize) {
       productChunks.push(prod.slice(i, i + chunkSize))
     }
@@ -22,6 +22,19 @@ exports.cartProd = function (req, res) {
   })
 };
 
+exports.checkOut = function (req, res) {
+  console.log(req.body)
+  req.body.forEach(items => {
+    Product.findById(items.productID, (err, item) => {
+      let prod = item._id
+      if (prod) {
+        item.stock -= items.qty
+      }
+      res.json(item)
+    })
+  });
+}
+
 //Details Path
 exports.detailsProd = function (req, res) {
   Product.find({
@@ -38,7 +51,7 @@ exports.detailsProd = function (req, res) {
 exports.adminPath = function (req, res) {
   Product.find((err, adminItems) => {
     let productChunks = [];
-    let chunkSize = 9;
+    let chunkSize = 8;
     for (let i = 0; i < adminItems.length; i += chunkSize) {
       productChunks.push(adminItems.slice(i, i + chunkSize))
     }
