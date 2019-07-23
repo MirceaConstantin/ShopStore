@@ -1,4 +1,5 @@
 let Product = require('./product');
+let Banners = require('./promoProduct')
 
 //Index Path
 exports.allProd = function (req, res) {
@@ -8,9 +9,16 @@ exports.allProd = function (req, res) {
     for (let i = 0; i < prod.length; i += chunkSize) {
       productChunks.push(prod.slice(i, i + chunkSize))
     }
-    res.render('shop/index', {
-      title: 'Cutia cu jucarii',
-      products: prod
+    Banners.find((err, banner) => {
+      let bannerChunks = [];
+      for (let j = 0; j < banner.length; i++) {
+        bannerChunks.push(banner.slice(i, i + 1))
+      }
+      res.render('shop/index', {
+        title: 'Cutia cu jucarii',
+        products: prod
+        //banners
+      })
     })
   });
 };
@@ -26,34 +34,39 @@ exports.checkOut = function (req, res) {
   //console.log(req.body.productID)
   //FIXME:
   let notInStock = [];
-  let ok = true;
-  for (let i = 0; i < req.body.length; i++) {
-    Product.findById({
-      _id: req.body[i].productID
-    }, (err, checkStock) => {
-      if (req.body[i].qty > checkStock.stock) {
-        ok = false
-        notInStock.push(req.body[i])
-      }
-    })
-  }
-  if (ok) {
-    for (let j = 0; j < req.body.length; j++) {
+  let ok = true
+  var promiseStockCheck = new Promise((resolve, reject) => {
+    for (let i = 0; i < req.body.length; i++) {
       Product.findById({
-        _id: req.body[j].productID
-      }, (err, item) => {
-        item.stock -= req.body[j].qty;
-        item.save()
+        _id: req.body[i].productID
+      }, (err, checkStock) => {
+        if (req.body[i].qty > checkStock.stock) {
+          ok = false
+          notInStock.push(req.body[i])
+        }
+        resolve();
       })
     }
-    res.json({
-      message: 'Success'
-    })
-  } else {
-    res.json({
-      message: `Fail.`
-    })
-  }
+  })
+  promiseStockCheck.then(() => {
+    if (ok) {
+      for (let j = 0; j < req.body.length; j++) {
+        Product.findById({
+          _id: req.body[j].productID
+        }, (err, item) => {
+          item.stock -= req.body[j].qty;
+          item.save()
+        })
+      }
+      res.json({
+        message: 'Success'
+      })
+    } else {
+      res.json({
+        message: `Fail.`
+      })
+    }
+  })
 }
 
 //Details Path
