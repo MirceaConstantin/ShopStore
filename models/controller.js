@@ -26,21 +26,34 @@ exports.checkOut = function (req, res) {
   //console.log(req.body.productID)
   //FIXME:
   let notInStock = [];
+  let ok = true;
   for (let i = 0; i < req.body.length; i++) {
     Product.findById({
       _id: req.body[i].productID
-    }, (err, item) => {
-      if (req.body[i].qty <= item.stock) {
-        item.stock -= req.body[i].qty;
-      } else {
-        notInStock.push(req.body[i]);
+    }, (err, checkStock) => {
+      if (req.body[i].qty > checkStock.stock) {
+        ok = false
+        notInStock.push(req.body[i])
       }
     })
-    item.save()
   }
-  res.json(
-    JSON.stringify(notInStock)
-  )
+  if (ok) {
+    for (let j = 0; j < req.body.length; j++) {
+      Product.findById({
+        _id: req.body[j].productID
+      }, (err, item) => {
+        item.stock -= req.body[j].qty;
+        item.save()
+      })
+    }
+    res.json({
+      message: 'Success'
+    })
+  } else {
+    res.json({
+      message: `Fail.`
+    })
+  }
 }
 
 //Details Path

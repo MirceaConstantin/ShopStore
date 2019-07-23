@@ -107,12 +107,13 @@ function postCart() {
       })
       .then(res => res.json())
       .then((data) => {
+        console.log(data)
         let cart = document.querySelector('#cart');
-        cart.innerHTML = data;
+        cart.innerHTML = data.message;
         setTimeout(() => {
           window.location.href = '/';
-        }, 5000);
+        }, 55000);
+        localStorage.clear()
       })
-    localStorage.clear()
   })
 }
