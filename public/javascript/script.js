@@ -2,7 +2,6 @@ window.addEventListener('load', () => {
   preload();
 })
 
-
 function preload() {
   let container = document.querySelector('#container')
   let load = document.querySelector('#load');

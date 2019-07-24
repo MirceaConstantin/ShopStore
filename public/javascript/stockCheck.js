@@ -1,6 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
   draw()
-
 })
 
 function draw() {
@@ -58,24 +57,52 @@ function draw() {
   postCart()
 }
 
+function updateQtyCart() {
+  let badgeCart = document.querySelectorAll('.badgeCart');
+  let totalQty = 0;
+  localStorage.getItem('myCart')
+  let data = JSON.parse(localStorage.getItem('myCart'))
+  for (let i in data) {
+    totalQty += data[i].qty;
+  }
+  for (let i in badgeCart) {
+    if (totalQty == 0) {
+      badgeCart[i].innerHTML = ''
+    } else {
+      badgeCart[i].innerHTML = totalQty;
+    }
+  }
+}
+
 function changeVal(el) {
   let qt = parseInt(el.parentNode.children[1].innerHTML)
   let prodPrice = parseInt(el.parentNode.children[4].innerHTML)
   let prodTotal = qt * prodPrice
-  //console.log(prodTotal)
-
-  changeTotal(prodTotal)
+  el.parentNode.children[3].innerHTML = `${prodTotal} $`
+  changeTotal()
 }
 
-
-
-function changeTotal(total) {
+function changeTotal() {
 
   let price = 0;
+  // Value
+  let fullPrice = document.querySelectorAll('.full-price')
+  for (let i = 0; i < fullPrice.length; i++) {
+    price += parseFloat(fullPrice[i].innerHTML)
+  }
 
-  let totalPrice = document.querySelectorAll('.full-price');
-  for (let i = 0; i < totalPrice.length; i++) {}
-  console.log(price)
+  let total = document.querySelector('.total');
+  total.children[0].innerHTML = price + ' $';
+
+  // Items
+  let items = 0;
+  let item = document.querySelectorAll('.qt');
+  for (let i = 0; i < item.length; i++) {
+    items += parseInt(item[i].innerHTML)
+  }
+
+  let totalItems = document.querySelector('.float-left')
+  totalItems.children[0].children[0].innerHTML = items
 }
 
 function plus() {
@@ -84,15 +111,18 @@ function plus() {
   for (let i = 0; i < plusBtn.length; i++) {
     plusBtn[i].addEventListener('click', () => {
       plusBtn[i].parentNode.children[1].innerHTML = parseInt(plusBtn[i].parentNode.children[1].innerHTML) + 1;
+      let myCart = JSON.parse(localStorage.getItem('myCart'))
+      myCart[i].qty++
+      localStorage.setItem('myCart', JSON.stringify(myCart))
       plusBtn[i].parentNode.children[3].classList.add('added');
       let plus = plusBtn[i]
       window.setTimeout(() => {
         plus.parentNode.children[3].classList.remove('added');
         changeVal(plus)
       }, 150)
+      updateQtyCart()
     })
   }
-
 }
 
 function minus() {
@@ -101,8 +131,11 @@ function minus() {
   for (let i = 0; i < minusBtn.length; i++) {
     minusBtn[i].addEventListener('click', () => {
       let child = minusBtn[i].parentNode.children[1];
-      if (parseInt(child.innerHTML) > 1) {
+      let myCart = JSON.parse(localStorage.getItem('myCart'))
+      if (parseInt(child.innerHTML) >= 1) {
         child.innerHTML = parseInt(child.innerHTML) - 1;
+        myCart[i].qty--
+        localStorage.setItem('myCart', JSON.stringify(myCart))
       }
       minusBtn[i].parentNode.children[3].classList.add("minused");
       let minus = minusBtn[i];
@@ -110,6 +143,7 @@ function minus() {
         minus.parentNode.children[3].classList.remove('minused');
         changeVal(minus)
       }, 150)
+      updateQtyCart()
     })
   }
 }
@@ -131,11 +165,11 @@ function postCart() {
         console.log(data)
         let cart = document.querySelector('#cart');
         cart.innerHTML =
-          `<h1>${data.message}</h1>`
+          `<h3>${data.message}</h3>`
         setTimeout(() => {
           window.location.href = '/';
-        }, 55000);
-        localStorage.clear()
+        }, 50000);
+        if (data.ok) localStorage.clear()
       })
   })
 }
