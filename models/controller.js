@@ -30,25 +30,23 @@ exports.cartProd = function (req, res) {
   })
 };
 
-exports.checkOut = function (req, res) {
-  //console.log(req.body.productID)
-  //FIXME:
+exports.checkOut = async function (req, res) {
   let notInStock = [];
   let ok = true
-  var promiseStockCheck = new Promise((resolve, reject) => {
+  let stockChecker = async () => {
     for (let i = 0; i < req.body.length; i++) {
-      Product.findById({
-        _id: req.body[i].productID
-      }, (err, checkStock) => {
-        if (req.body[i].qty > checkStock.stock) {
-          ok = false
-          notInStock.push(req.body[i])
-        }
-      })
-      resolve();
+      await Product.findById({
+          _id: req.body[i].productID
+        })
+        .then((checkStock) => {
+          if (req.body[i].qty > checkStock.stock) {
+            ok = false
+            notInStock.push(req.body[i])
+          }
+        })
     }
-  })
-  promiseStockCheck.then(() => {
+  }
+  let stockManager = () => {
     if (ok) {
       for (let j = 0; j < req.body.length; j++) {
         Product.findById({
@@ -59,14 +57,26 @@ exports.checkOut = function (req, res) {
         })
       }
       res.json({
-        message: 'Success'
+        message: 'Success',
+        ok: ok
       })
     } else {
+      let message = 'The following products are not in stock:<br>';
+      for (let i = 0; i < notInStock.length; i++) {
+        if (!i) {
+          message += notInStock[i].productTitle;
+        } else {
+          message += `<br>${notInStock[i].productTitle}`
+        }
+      }
       res.json({
-        message: `Fail.`
+        message: message,
+        ok: ok
       })
     }
-  })
+  }
+  await stockChecker()
+  await stockManager()
 }
 
 //Details Path
