@@ -130,7 +130,8 @@ function postCart() {
       .then((data) => {
         console.log(data)
         let cart = document.querySelector('#cart');
-        cart.innerHTML = data.message;
+        cart.innerHTML =
+          `<h1>${data.message}</h1>`
         setTimeout(() => {
           window.location.href = '/';
         }, 55000);

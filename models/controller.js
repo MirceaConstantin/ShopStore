@@ -44,8 +44,8 @@ exports.checkOut = function (req, res) {
           ok = false
           notInStock.push(req.body[i])
         }
-        resolve();
       })
+      resolve();
     }
   })
   promiseStockCheck.then(() => {
