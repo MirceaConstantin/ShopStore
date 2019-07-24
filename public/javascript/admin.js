@@ -60,7 +60,6 @@ function addNewProd() {
 //Edit function
 function editAjax(id, index) {
   let editProd = document.querySelectorAll('.editProductPanel')
-  console.log('edit')
   //Edit pannel need to add d-none
   editProd[index].classList.remove('d-none')
   fetch(`/api/${id}`, {

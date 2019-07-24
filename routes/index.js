@@ -1,6 +1,6 @@
-let express = require('express');
-let router = express.Router();
-let products = require('../models/controller');
+const express = require('express');
+const router = express.Router();
+const products = require('../models/controller');
 
 //Index router
 router.route('/')

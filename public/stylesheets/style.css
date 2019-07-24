@@ -87,11 +87,23 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 #load {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  opacity: 1;
+  transition: 0.5s opacity;
+  background: white;
+  z-index: 999;
+}
+
+#gears {
   position: relative;
-  margin: 50px auto;
+  margin: auto;
   width: 100px;
   height: 80px;
-  top: 160px;
+  top: calc(50% - 110px);
 }
 
 .gear {
@@ -101,6 +113,10 @@
   height: 40px;
   -webkit-animation: spin 5s infinite;
   animation: spin 5s infinite;
+}
+
+.one svg {
+  fill: rgb(148, 148, 148);
 }
 
 .two {
@@ -116,6 +132,10 @@
   left: -10px;
   width: 60px;
   height: 60px;
+}
+
+.three svg {
+  fill: rgb(56, 56, 56);
 }
 
 @-webkit-keyframes spin {
@@ -147,8 +167,10 @@
 }
 
 #text {
-  color: #21252983;
+  position: relative;
+  color: rgb(129, 129, 129);
   font-size: 18px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   text-align: center;
+  top: calc(50% - 80px);
 }

@@ -1,25 +1,21 @@
 window.addEventListener('load', () => {
-  let contaienr = document.querySelector('#container')
-  let navBar = document.querySelector('#navBar')
-  contaienr.style.display = 'block'
-  navBar.style.display = 'block'
   preload();
 })
 
-window.addEventListener('DOMContentLoaded', () => {
-  let contaienr = document.querySelector('#container')
-  let navBar = document.querySelector('#navBar')
-  contaienr.style.display = 'none'
-  navBar.style.display = 'none'
-  updateQtyCart()
-});
 
 function preload() {
+  let container = document.querySelector('#container')
   let load = document.querySelector('#load');
-  let text = document.querySelector('#text');
-  load.style.display = 'none';
-  text.style.display = 'none';
+  container.style.display = 'block'
+  load.style.opacity = 0;
+  setTimeout(function () {
+    load.style.display = 'none';
+  }, 500);
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+  updateQtyCart()
+});
 
 function updateQtyCart() {
   let badgeCart = document.querySelectorAll('.badgeCart');

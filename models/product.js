@@ -1,7 +1,7 @@
-var mongoDB = require('mongoose');
-var Schema = mongoDB.Schema;
+const mongoDB = require('mongoose');
+const Schema = mongoDB.Schema;
 
-var schema = new Schema({
+let schema = new Schema({
     title: {
         type: String,
         required: true

@@ -11,13 +11,13 @@ exports.allProd = function (req, res) {
     }
     Banners.find((err, banner) => {
       let bannerChunks = [];
-      for (let j = 0; j < banner.length; i++) {
-        bannerChunks.push(banner.slice(i, i + 1))
+      for (let j = 0; j < banner.length; j++) {
+        bannerChunks.push(banner.slice(j, j + 1))
       }
       res.render('shop/index', {
         title: 'Cutia cu jucarii',
-        products: prod
-        //banners
+        products: prod,
+        banners: banner
       })
     })
   });

@@ -1,11 +1,11 @@
-var Product = require('../models/product');
-var mongoDB = require('mongoose');
+const Product = require('../models/product');
+const mongoDB = require('mongoose');
 
 mongoDB.connect('mongodb+srv://shopAdmin:shopAdmin@myshopproducts-huk3f.mongodb.net/myShop', {
   useNewUrlParser: true
 });
 
-var products = [
+let products = [
   new Product({
     title: 'State of Decay 2',
     imagePoster: 'https://store-images.s-microsoft.com/image/apps.18454.14425140369408817.31079f78-7ddb-48a1-bb62-355c82034fdd.cbc00080-ee71-485b-917c-b4f035e7cfea',
@@ -176,8 +176,8 @@ var products = [
   })
 ]
 
-var done = 0;
-for (var i = 0; i < products.length; i++) {
+let done = 0;
+for (let i = 0; i < products.length; i++) {
   products[i].save((err, result) => {
     done++;
     if (done === products.length) {

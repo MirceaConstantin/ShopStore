@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
-  console.log('Ready')
   draw()
+
 })
 
 function draw() {
@@ -58,6 +58,26 @@ function draw() {
   postCart()
 }
 
+function changeVal(el) {
+  let qt = parseInt(el.parentNode.children[1].innerHTML)
+  let prodPrice = parseInt(el.parentNode.children[4].innerHTML)
+  let prodTotal = qt * prodPrice
+  //console.log(prodTotal)
+
+  changeTotal(prodTotal)
+}
+
+
+
+function changeTotal(total) {
+
+  let price = 0;
+
+  let totalPrice = document.querySelectorAll('.full-price');
+  for (let i = 0; i < totalPrice.length; i++) {}
+  console.log(price)
+}
+
 function plus() {
   //Plus Button
   let plusBtn = document.querySelectorAll('.qt-plus');
@@ -72,6 +92,7 @@ function plus() {
       }, 150)
     })
   }
+
 }
 
 function minus() {
@@ -84,7 +105,7 @@ function minus() {
         child.innerHTML = parseInt(child.innerHTML) - 1;
       }
       minusBtn[i].parentNode.children[3].classList.add("minused");
-      var minus = minusBtn[i];
+      let minus = minusBtn[i];
       window.setTimeout(() => {
         minus.parentNode.children[3].classList.remove('minused');
         changeVal(minus)
