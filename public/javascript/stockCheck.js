@@ -1,6 +1,22 @@
 window.addEventListener('DOMContentLoaded', () => {
-  draw()
+  checkCart()
 })
+
+function checkCart() {
+  let emptyCart = document.querySelector('#site-footer')
+  let cart = document.querySelector('#cart');
+  if (localStorage.length == false) {
+    emptyCart.style.display = 'none'
+    cart.innerHTML = `<div class="container-fluid">
+          <div class="text-center">
+            <div class="error mx-auto" data-text="Your cart it's empty.">Your cart it's empty.</div>
+            <a class="back" href="/">&larr; Back to Index</a>
+          </div>
+        </div>`
+  } else {
+    draw()
+  }
+}
 
 function draw() {
   let cart = document.querySelector('#cart');
