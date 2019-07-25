@@ -7,10 +7,11 @@ function checkCart() {
   let cart = document.querySelector('#cart');
   if (localStorage.length == false) {
     emptyCart.style.display = 'none'
-    cart.innerHTML = `<div class="container-fluid">
+    cart.innerHTML = `
+        <div class="container-fluid">
           <div class="text-center">
-            <div class="error mx-auto" data-text="Your cart it's empty.">Your cart it's empty.</div>
-            <a class="back" href="/">&larr; Back to Index</a>
+            <div class="error mx-auto" data-text="Your cart is empty.">Your cart is empty.</div>
+            <a class="back" href="/">&larr; Back to Home</a>
           </div>
         </div>`
   } else {
@@ -70,6 +71,7 @@ function draw() {
   footer.firstChild.innerHTML = footerCart;
   plus()
   minus()
+  removeProduct()
   postCart()
 }
 
@@ -164,6 +166,23 @@ function minus() {
   }
 }
 
+function removeProduct() {
+  let removeBtn = document.querySelectorAll('.remove');
+  removeBtn.forEach((el, i) => {
+    el.addEventListener('click', () => {
+      el.parentNode.parentNode.classList.add('remove')
+      let myCart = JSON.parse(localStorage.getItem('myCart'))
+      myCart.splice(i, 1)
+      window.setTimeout(() => {
+        el.parentNode.parentNode.remove();
+        localStorage.setItem('myCart', JSON.stringify(myCart))
+        updateQtyCart()
+        changeTotal()
+      }, 2500)
+    })
+  });
+}
+
 function postCart() {
   let checkOutBtn = document.querySelector('.checkOutBtn');
   let myCart = localStorage.getItem('myCart')
@@ -184,7 +203,7 @@ function postCart() {
           `<h3>${data.message}</h3>`
         setTimeout(() => {
           window.location.href = '/';
-        }, 50000);
+        }, 5000);
         if (data.ok) localStorage.clear()
       })
   })
