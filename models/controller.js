@@ -41,7 +41,10 @@ exports.checkOut = async function (req, res) {
         .then((checkStock) => {
           if (req.body[i].qty > checkStock.stock) {
             ok = false
-            notInStock.push(req.body[i])
+            notInStock.push({
+              prod: req.body[i],
+              stock: checkStock.stock
+            })
           }
         })
     }
@@ -61,12 +64,12 @@ exports.checkOut = async function (req, res) {
         ok: ok
       })
     } else {
-      let message = '<span class="titleFail">The following products are not in stock:</span><br>';
+      let message = '<span class="titleFail">The following products have limited stock:</span><br>';
       for (let i = 0; i < notInStock.length; i++) {
         if (!i) {
-          message += `<li class="fail">${notInStock[i].productTitle}</li>`;
+          message += `<li class="fail">${notInStock[i].prod.productTitle} | ${notInStock[i].stock} left.</li>`;
         } else {
-          message += `<li>${notInStock[i].productTitle}</li>`
+          message += `<li class="fail">${notInStock[i].prod.productTitle} | ${notInStock[i].stock} left.</li>`
         }
       }
       res.json({
