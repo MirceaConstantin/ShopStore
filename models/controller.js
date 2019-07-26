@@ -57,16 +57,16 @@ exports.checkOut = async function (req, res) {
         })
       }
       res.json({
-        message: 'Success',
+        message: '<span class="success">Success</span>',
         ok: ok
       })
     } else {
-      let message = 'The following products are not in stock:<br>';
+      let message = '<span class="titleFail">The following products are not in stock:</span><br>';
       for (let i = 0; i < notInStock.length; i++) {
         if (!i) {
-          message += notInStock[i].productTitle;
+          message += `<li class="fail">${notInStock[i].productTitle}</li>`;
         } else {
-          message += `<br>${notInStock[i].productTitle}`
+          message += `<li>${notInStock[i].productTitle}</li>`
         }
       }
       res.json({

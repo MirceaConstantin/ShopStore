@@ -116,7 +116,15 @@ a:hover {
   -moz-transition: margin 0.2s linear, opacity 0.2s linear;
   -ms-transition: margin 0.2s linear, opacity 0.2s linear;
   -o-transition: margin 0.2s linear, opacity 0.2s linear;
-  transition: margin 0.2s linear, opacity 0.2s linear;
+  transition: margin 0.35s linear, opacity 0.35s linear;
+}
+
+.product.slideUp {
+  height: 0px;
+  margin: 0;
+  border: 0;
+  transition: height 0.2s linear, margin 0.2s linear, border 0.2s linear;
+  overflow: hidden;
 }
 
 .product img {
@@ -767,4 +775,21 @@ a:hover {
   overflow: hidden;
   clip: rect(0, 900px, 0, 0);
   animation: noise-anim-2 3s infinite linear alternate-reverse
+}
+
+.message {
+  text-align: center;
+}
+
+.success {
+  color: green;
+  font-size: 30px;
+}
+
+.titleFail {
+  font-size: 30px;
+}
+
+.fail {
+  color: red;
 }

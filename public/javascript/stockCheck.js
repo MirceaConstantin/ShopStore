@@ -5,13 +5,16 @@ window.addEventListener('DOMContentLoaded', () => {
 function checkCart() {
   let emptyCart = document.querySelector('#site-footer')
   let cart = document.querySelector('#cart');
-  if (localStorage.length == false) {
+  let myCart = JSON.parse(localStorage.getItem('myCart'))
+  if (localStorage.length == false || myCart.length == 0) {
     emptyCart.style.display = 'none'
     cart.innerHTML = `
         <div class="container-fluid">
           <div class="text-center">
             <div class="error mx-auto" data-text="Your cart is empty.">Your cart is empty.</div>
-            <a class="back" href="/">&larr; Back to Home</a>
+            <div class="back">
+              <a href="/">&larr; Back to Home</a>
+            </div>
           </div>
         </div>`
   } else {
@@ -170,15 +173,21 @@ function removeProduct() {
   let removeBtn = document.querySelectorAll('.remove');
   removeBtn.forEach((el, i) => {
     el.addEventListener('click', () => {
-      el.parentNode.parentNode.classList.add('remove')
+      event.preventDefault()
+      el.parentNode.parentNode.classList.add('removed')
       let myCart = JSON.parse(localStorage.getItem('myCart'))
-      myCart.splice(i, 1)
       window.setTimeout(() => {
-        el.parentNode.parentNode.remove();
-        localStorage.setItem('myCart', JSON.stringify(myCart))
-        updateQtyCart()
-        changeTotal()
-      }, 2500)
+        el.parentNode.parentNode.classList.add('slideUp')
+        window.setTimeout(() => {
+          myCart.splice(i, 1)
+          el.parentNode.parentNode.remove();
+          localStorage.setItem('myCart', JSON.stringify(myCart))
+          updateQtyCart()
+          changeTotal()
+          removeProduct()
+          checkCart()
+        }, 350)
+      }, 200)
     })
   });
 }
@@ -200,7 +209,7 @@ function postCart() {
         console.log(data)
         let cart = document.querySelector('#cart');
         cart.innerHTML =
-          `<h3>${data.message}</h3>`
+          `<div class="message">${data.message}</div>`
         setTimeout(() => {
           window.location.href = '/';
         }, 5000);
