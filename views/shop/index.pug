@@ -14,8 +14,8 @@ block index
         each banner, index in banners
           div(class=`carousel-item ${!index ? 'active' : ''}` width="550" height="250")
             img(src=banner.imageBanner width="550" height="250")
-            div(class="p-sm-1 pt-md-1 pb-md-1 pl-md-3 pr-md-3 pt-lg-2 pb-lg-2 pl-lg-3 pr-lg-3 text-block" style="width: 35%; font-size: 1vmin; padding: 5px 5px; line-spacing: 0.5rem") 
-              h4(style="font-size: 2vmin;")= banner.infoTitle
+            div(class="p-sm-1 pt-md-1 pb-md-1 pl-md-3 pr-md-3 pt-lg-2 pb-lg-2 pl-lg-3 pr-lg-3 text-block" style="width: 35%; font-size: 2vmin; padding: 5px 5px; line-spacing: 0.5rem") 
+              h4(style="font-size: 3vmin;")= banner.infoTitle
               p= banner.infoDescription
             div(class="carousel-caption")
               h5= index + 1
