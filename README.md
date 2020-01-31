@@ -1,3 +1,9 @@
+<p align="center">
+    <a href="https://store-games.herokuapp.com/" target="_blank">
+        <img src="https://img.shields.io/badge/Game%20%Store-1.0.0-red.svg?style=for-the-badge" alt="Store version">
+    </a>
+</p>
+
 # Game Store
 [Visit the Shop on Heroku.com](https://floating-garden-10269.herokuapp.com/)
 
