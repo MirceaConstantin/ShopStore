@@ -13,7 +13,12 @@
 # Game Store
 [Visit the Shop on Heroku.com](https://floating-garden-10269.herokuapp.com/)
 
-Shopping Store with nodeJS (Express) / Pug Engine / Bootstrap and MongoDB as database.
+### v2
+  - Rewrite the backend with ```Deno```
+  - Rewrite the frontend with ```VueJS```
+
+### v1
+  - Shopping Store with nodeJS (Express) / Pug Engine / Bootstrap and MongoDB as database.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
