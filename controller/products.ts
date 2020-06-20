@@ -35,7 +35,7 @@ const getProduct = async ({ params, response }: { params: { id: string }; respon
     await client.connectWithUri(config().DATA_BASE);
     const db = client.database("myShop");
     const productObj = db.collection("products");
-    const product = await productObj.findOne({ _id: { $oid: params.id } });
+    const product = await productObj.findOne({ _id: { $oid: params.id } }) ;
 
     response.status = 200
     response.body = {
@@ -91,9 +91,40 @@ const addProduct = async ({ response, request }: { response: any; request: any; 
 //@route put /api/v2/products/:id
 
 const updateProduct = async ({ params, response, request }: { params: { id: string }; response: any; request: any; }) => {
-  // Make update product
-  const prod = await getProduct({ params: { id: params.id }, response });
-  console.log(response)
+  const body = await request.body();
+  const updateProd = body.value;
+
+  if (!request.hasBody) {
+    response.status = 400;
+    response.body = {
+      success: false,
+      data: "No data provided",
+    };
+  } else {
+    try {
+      await client.connectWithUri(config().DATA_BASE);
+      const db = client.database("myShop");
+      const productObj = db.collection("products");
+      await productObj.updateOne(
+        { _id: { $oid: params.id } },
+        { $set: updateProd }
+      );
+      response.status = 202;
+      response.body = {
+        success: true,
+        data: {
+          _id: params.id,
+          updateProd
+        }
+      }
+    } catch (error) {
+      response.status = 500;
+      response.body = {
+        success: false,
+        msg: error.toString()
+      }
+    }
+  }
 }
 
 //@desc delete single product
