@@ -5,13 +5,12 @@
 </p>
 <p align="center">
    <a href="https://store-games.herokuapp.com/" target="_blank">
-    <img src="https://img.shields.io/badge/Status-Online-green.svg?style=for-the-badge" alt="Status">
+    <img src="https://img.shields.io/badge/Status-Offline-green.svg?style=for-the-badge" alt="Status">
    </a>  
 </p>
  
 
 # Game Store
-[Visit the Shop on Heroku.com](https://floating-garden-10269.herokuapp.com/)
 
 ### v2
   - Rewrite the backend with ```Deno```
