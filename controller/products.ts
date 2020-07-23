@@ -1,10 +1,22 @@
 import { MongoClient } from "https://deno.land/x/mongo@v0.8.0/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
+import { readFileStrSync } from "https://deno.land/std/fs/mod.ts";
+import { Product } from "../interface/types.ts";
 
 const client = new MongoClient();
 
-//@desc Get all products
-//@route Get /api/v2/products
+const apiInformation = async ({ response }: { response: any }) => {
+  try {
+    response.status = 200;
+    response.body = readFileStrSync("index.html");
+  } catch (error) {
+    response.status = 500;
+    response.body = {
+      success: false,
+      data: error.toString(),
+    };
+  }
+};
 
 const getProducts = async ({ response }: { response: any }) => {
   try {
@@ -14,6 +26,7 @@ const getProducts = async ({ response }: { response: any }) => {
     const products = await productObj.find();
 
     response.status = 200
+    response.header = "X-Response-Time"
     response.body = {
       success: true,
       data: products
@@ -151,4 +164,4 @@ const deleteProduct = async ({ params, response }: { params: { id: string }; res
   }
 };
 
-export { getProducts, getProduct, addProduct, updateProduct, deleteProduct };    
+export { getProducts, getProduct, addProduct, updateProduct, deleteProduct, apiInformation };
