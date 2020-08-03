@@ -1,14 +1,21 @@
-import { MongoClient } from "https://deno.land/x/mongo@v0.8.0/mod.ts";
-import { config } from "https://deno.land/x/dotenv/mod.ts";
-import { readFileStrSync } from "https://deno.land/std/fs/mod.ts";
-import { Product } from "../interface/types.ts";
+import { connectDb } from "../utils/dbConnection.ts";
 
-const client = new MongoClient();
+interface Product {
+  title: string;
+  imagePoster: string;
+  imageSlider: Array<String>;
+  trailerGame: string;
+  description: string;
+  price: number;
+  genre: Array<String>;
+  platform: Array<String>;
+  stock: number;
+}
 
-const apiInformation = async ({ response }: { response: any }) => {
+export const apiInformation = async ({ response }: { response: any;}) => {
   try {
     response.status = 200;
-    response.body = readFileStrSync("index.html");
+    response.body = "content";
   } catch (error) {
     response.status = 500;
     response.body = {
@@ -18,11 +25,9 @@ const apiInformation = async ({ response }: { response: any }) => {
   }
 };
 
-const getProducts = async ({ response }: { response: any }) => {
+export const getProducts = async ({ response }: { response: any }) => {
   try {
-    await client.connectWithUri(config().DATA_BASE);
-    const db = client.database("myShop");
-    const productObj = db.collection("products");
+    const productObj = await connectDb()
     const products = await productObj.find();
 
     response.status = 200
@@ -40,14 +45,9 @@ const getProducts = async ({ response }: { response: any }) => {
   }
 };
 
-//@desc Get single products
-//@route Get /api/v2/products/:id
-
-const getProduct = async ({ params, response }: { params: { id: string }; response: any; }) => {
+export const getProduct = async ({ params, response }: { params: { id: string }; response: any; }) => {
   try {
-    await client.connectWithUri(config().DATA_BASE);
-    const db = client.database("myShop");
-    const productObj = db.collection("products");
+    const productObj = await connectDb();
     const product = await productObj.findOne({ _id: { $oid: params.id } }) ;
 
     response.status = 200
@@ -64,14 +64,9 @@ const getProduct = async ({ params, response }: { params: { id: string }; respon
   }
 };
 
-//@desc Adds a product
-//@route POST /api/v2/products
-
-const addProduct = async ({ response, request }: { response: any; request: any; }) => {
+export const addProduct = async ({ response, request }: { response: any; request: any; }) => {
+  //TODO: Implementing interface to be required for new products
   const body = await request.body();
-
-  const product = body.value;
-
   if (!request.hasBody) {
     response.status = 400;
     response.body = {
@@ -80,9 +75,8 @@ const addProduct = async ({ response, request }: { response: any; request: any; 
     };
   } else {
     try {
-      await client.connectWithUri(config().DATA_BASE);
-      const db = client.database("myShop");
-      const productObj = db.collection("products");
+      const product = body.value;
+      const productObj = await connectDb();
       await productObj.insertOne({ product });
 
       response.status = 201;
@@ -100,10 +94,7 @@ const addProduct = async ({ response, request }: { response: any; request: any; 
   }
 };
 
-//@desc update single product
-//@route put /api/v2/products/:id
-
-const updateProduct = async ({ params, response, request }: { params: { id: string }; response: any; request: any; }) => {
+export const updateProduct = async ({ params, response, request }: { params: { id: string }; response: any; request: any; }) => {
   const body = await request.body();
   const updateProd = body.value;
 
@@ -115,9 +106,7 @@ const updateProduct = async ({ params, response, request }: { params: { id: stri
     };
   } else {
     try {
-      await client.connectWithUri(config().DATA_BASE);
-      const db = client.database("myShop");
-      const productObj = db.collection("products");
+      const productObj = await connectDb();
       await productObj.updateOne(
         { _id: { $oid: params.id } },
         { $set: updateProd }
@@ -140,14 +129,9 @@ const updateProduct = async ({ params, response, request }: { params: { id: stri
   }
 }
 
-//@desc delete single product
-//@route delete /api/v2/products/:id
-
-const deleteProduct = async ({ params, response }: { params: { id: string }; response: any }) => {
+export const deleteProduct = async ({ params, response }: { params: { id: string }; response: any }) => {
   try {
-    await client.connectWithUri(config().DATA_BASE);
-    const db = client.database("myShop");
-    const productObj = db.collection("products");
+    const productObj = await connectDb();
     const product = await productObj.deleteOne({ _id: { $oid: params.id } });
 
     response.status = 200
@@ -163,5 +147,3 @@ const deleteProduct = async ({ params, response }: { params: { id: string }; res
     }
   }
 };
-
-export { getProducts, getProduct, addProduct, updateProduct, deleteProduct, apiInformation };
