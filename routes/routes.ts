@@ -10,4 +10,5 @@ router
   .post("/api/v2/products", addProduct)
   .put("/api/v2/products/:id", updateProduct)
   .delete("/api/v2/products/:id", deleteProduct)
+  
 export default router;

@@ -20,7 +20,7 @@
   - Shopping Store with nodeJS (Express) / Pug Engine / Bootstrap and MongoDB as database.
 
 ## How to run
-  - For development ```denon run --allow-write --allow-read --allow-plugin --allow-net --allow-env --unstable ./app.ts```
+  - For development ```denon start```
   - For production ```deno run --allow-write --allow-read --allow-plugin --allow-net --allow-env --unstable ./app.ts```
 
 ## Contributing

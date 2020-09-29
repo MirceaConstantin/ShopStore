@@ -1,11 +1,12 @@
 export interface Product {
+    _id: {$oid: string},
     title: string;
     imagePoster: string;
-    imageSlider: Array<String>;
+    imageSlider: Array<string>;
     trailerGame: string;
     description: string;
     price: number;
-    genre: Array<String>;
-    platform: Array<String>;
+    genre: Array<string>;
+    platform: Array<string>;
     stock: number;
-}
+  }

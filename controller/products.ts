@@ -1,18 +1,7 @@
 import { connectDb } from "../utils/dbConnection.ts";
+import { Product } from "../interface/types.ts";
 
-interface Product {
-  title: string;
-  imagePoster: string;
-  imageSlider: Array<String>;
-  trailerGame: string;
-  description: string;
-  price: number;
-  genre: Array<String>;
-  platform: Array<String>;
-  stock: number;
-}
-
-export const apiInformation = async ({ response }: { response: any;}) => {
+export const apiInformation = async ({ response }: { response: any }) => {
   try {
     response.status = 200;
     response.body = "content";
@@ -65,9 +54,10 @@ export const getProduct = async ({ params, response }: { params: { id: string };
 };
 
 export const addProduct = async ({ response, request }: { response: any; request: any; }) => {
-  //TODO: Implementing interface to be required for new products
+  //TODO: Sent a 400 status if the product don't match with the interface
   const body = await request.body();
-  if (!request.hasBody) {
+  const product: Product = await body.value;
+  if (!request.hasBody || !product) {
     response.status = 400;
     response.body = {
       success: false,
@@ -75,14 +65,13 @@ export const addProduct = async ({ response, request }: { response: any; request
     };
   } else {
     try {
-      const product = body.value;
       const productObj = await connectDb();
-      await productObj.insertOne({ product });
+      productObj.insertOne(product);
 
       response.status = 201;
       response.body = {
         success: true,
-        data: product
+        data: await product
       }
     } catch (error) {
       response.status = 500;
@@ -137,7 +126,7 @@ export const deleteProduct = async ({ params, response }: { params: { id: string
     response.status = 200
     response.body = {
       success: true,
-      data: product
+      data: await product
     }
   } catch (error) {
     response.status = 404;
