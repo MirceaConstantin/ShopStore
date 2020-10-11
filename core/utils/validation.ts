@@ -21,7 +21,7 @@ export const checkProduct = (product: any) => {
         title: "Title is missing! Please add a title for the product."
       });
     }
-    if (!product.poster) {
+    if (!product.imagePoster) {
       message.push({
         poster: "Poster is missing! Please add a poster for the product."
       });
