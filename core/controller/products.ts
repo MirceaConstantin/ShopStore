@@ -62,56 +62,48 @@ export const getProduct = async ({ params, response }: { params: { id: string };
 };
 
 export const addProduct = async ({ response, request }: { response: any; request: any; }) => {
-  //TODO: Sent a 400 status if the product don't match with the interface
+  // TODO: Nu permite adaugarea altui field in product
   const body = request.body();
   const product: Product = await body.value;
-  if (!request.hasBody || !product) {
-    response.status = 400;
-    response.body = {
-      success: false,
-      data: "No data provided",
-    };
-  } else {
-    try {
-      if (await checkProduct(product).length !== 0) {
-        const message = await checkProduct(product);
-          response.status = 400
-          response.body = {
-            success: false,
-            data: message
-        }
-      } else {
-        const productObj = await connectDb();
-        productObj.insertOne(product);
-  
-        response.status = 201;
+  try {
+    if (await checkProduct(product).length !== 0) {
+      const message = await checkProduct(product);
+        response.status = 400
         response.body = {
-          success: true,
-          data: await product
-        }
+          success: false,
+          data: message
       }
-    } catch (error) {
+    } else {
+      const productObj = await connectDb();
+      productObj.insertOne(product);
+
+      response.status = 201;
+      response.body = {
+        success: true,
+        data: await product
+      }
+    }
+  } catch (error) {
       response.status = 500;
       response.body = {
         success: false,
         msg: error.toString()
       }
-    };
-  }
+    }
 };
 
 export const updateProduct = async ({ params, response, request }: { params: { id: string }; response: any; request: any; }) => {
   const body = request.body();
   const updateProd: Product = await body.value;
-
-  if (!request.hasBody) {
-    response.status = 400;
-    response.body = {
-      success: false,
-      data: "No data provided",
-    };
-  } else {
-    try {
+  try {
+    if (await checkProduct(updateProd).length !== 0) {
+      const message = await checkProduct(updateProd);
+      response.status = 400
+      response.body = {
+        success: false,
+        data: message
+      }
+    } else {
       const productObj = await connectDb();
       await productObj.updateOne(
         { _id: { $oid: params.id } },
@@ -125,12 +117,12 @@ export const updateProduct = async ({ params, response, request }: { params: { i
           updateProd
         }
       }
-    } catch (error) {
-      response.status = 500;
-      response.body = {
-        success: false,
-        msg: error.toString()
-      }
+    }
+  } catch (error) {
+    response.status = 500;
+    response.body = {
+      success: false,
+      msg: error.toString()
     }
   }
 }
@@ -141,10 +133,18 @@ export const deleteProduct = async ({ params, response, request }: { params: { i
     const deletedProduct = await productObj.findOne({ _id: { $oid: params.id } }) ;
     await productObj.deleteOne({ _id: { $oid: params.id } });
 
-    response.status = 200
-    response.body = {
-      success: true,
-      data: await deletedProduct
+    if (deletedProduct) {
+      response.status = 200
+      response.body = {
+        success: true,
+        data: await deletedProduct
+      }
+    } else {
+      response.status = 404
+      response.body = {
+        success: false,
+        data: "Product requested is not found"
+      }
     }
   } catch (error) {
     response.status = 404;
