@@ -16,7 +16,7 @@ export const apiInformation = async ({ response }: { response: any }) => {
 
 export const getProducts = async ({ response }: { response: any }) => {
   try {
-    const productObj = await connectDb()
+    const productObj = connectDb()
     const products = await productObj.find();
 
     response.status = 200
@@ -34,12 +34,11 @@ export const getProducts = async ({ response }: { response: any }) => {
   }
 };
 
-export const getProduct = async ({ params, response }: { params: { id: string }; response: any; }) => {
+export const getProduct = async ({ params, response }: { params: { id: string }; response: any;}) => {
   try {
-    const productObj = await connectDb();
-    const product = await productObj.findOne({ _id: { $oid: params.id } }) ;
-
-    if (response.status === 200) {
+    const productObj = connectDb();
+    const product = await productObj.findOne({ _id: { $oid: params.id } });
+    if (product) {
       response.status = 200
       response.body = {
         success: true,
@@ -75,7 +74,7 @@ export const addProduct = async ({ response, request }: { response: any; request
       }
     } else {
       const productObj = await connectDb();
-      productObj.insertOne(product);
+      await productObj.insertOne(product);
 
       response.status = 201;
       response.body = {
@@ -104,17 +103,25 @@ export const updateProduct = async ({ params, response, request }: { params: { i
         data: message
       }
     } else {
-      const productObj = await connectDb();
-      await productObj.updateOne(
+      const productObj = connectDb();
+      const product = await productObj.updateOne(
         { _id: { $oid: params.id } },
         { $set: updateProd }
       );
-      response.status = 202;
-      response.body = {
-        success: true,
-        data: {
-          _id: params.id,
-          updateProd
+      if (product) {
+        response.status = 202;
+        response.body = {
+          success: true,
+          data: {
+            _id: params.id,
+            updateProd
+          }
+        }
+      } else {
+        response.status = 404
+        response.body = {
+        success: false,
+          data: "Product requested is not found"
         }
       }
     }
@@ -129,7 +136,7 @@ export const updateProduct = async ({ params, response, request }: { params: { i
 
 export const deleteProduct = async ({ params, response, request }: { params: { id: string }; response: any; request: any }) => {
   try {
-    const productObj = await connectDb();
+    const productObj = connectDb();
     const deletedProduct = await productObj.findOne({ _id: { $oid: params.id } }) ;
     await productObj.deleteOne({ _id: { $oid: params.id } });
 
