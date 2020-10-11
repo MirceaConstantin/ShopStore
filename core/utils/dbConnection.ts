@@ -1,4 +1,4 @@
-import { MongoClient } from "https://deno.land/x/mongo@v0.9.1/mod.ts";
+import { MongoClient } from "https://deno.land/x/mongo/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 import { Product } from "../interface/types.ts";
 

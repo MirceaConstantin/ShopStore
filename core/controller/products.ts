@@ -1,4 +1,4 @@
-import { connectDb } from "../utils/dbConnection.ts";
+import { connectDb, checkProduct } from "../utils/index.ts";
 import { Product } from "../interface/types.ts";
 
 export const apiInformation = async ({ response }: { response: any }) => {
@@ -39,10 +39,18 @@ export const getProduct = async ({ params, response }: { params: { id: string };
     const productObj = await connectDb();
     const product = await productObj.findOne({ _id: { $oid: params.id } }) ;
 
-    response.status = 200
-    response.body = {
-      success: true,
-      data: product
+    if (response.status === 200) {
+      response.status = 200
+      response.body = {
+        success: true,
+        data: product
+      }
+    } else {
+      response.status = 404
+      response.body = {
+        success: false,
+        data: "Product requested is not found"
+      }
     }
   } catch (error) {
     response.status = 404;
@@ -55,7 +63,7 @@ export const getProduct = async ({ params, response }: { params: { id: string };
 
 export const addProduct = async ({ response, request }: { response: any; request: any; }) => {
   //TODO: Sent a 400 status if the product don't match with the interface
-  const body = await request.body();
+  const body = request.body();
   const product: Product = await body.value;
   if (!request.hasBody || !product) {
     response.status = 400;
@@ -65,13 +73,22 @@ export const addProduct = async ({ response, request }: { response: any; request
     };
   } else {
     try {
-      const productObj = await connectDb();
-      productObj.insertOne(product);
-
-      response.status = 201;
-      response.body = {
-        success: true,
-        data: await product
+      if (await checkProduct(product).length !== 0) {
+        const message = await checkProduct(product);
+          response.status = 400
+          response.body = {
+            success: false,
+            data: message
+        }
+      } else {
+        const productObj = await connectDb();
+        productObj.insertOne(product);
+  
+        response.status = 201;
+        response.body = {
+          success: true,
+          data: await product
+        }
       }
     } catch (error) {
       response.status = 500;
@@ -84,8 +101,8 @@ export const addProduct = async ({ response, request }: { response: any; request
 };
 
 export const updateProduct = async ({ params, response, request }: { params: { id: string }; response: any; request: any; }) => {
-  const body = await request.body();
-  const updateProd = body.value;
+  const body = request.body();
+  const updateProd: Product = await body.value;
 
   if (!request.hasBody) {
     response.status = 400;
@@ -118,15 +135,16 @@ export const updateProduct = async ({ params, response, request }: { params: { i
   }
 }
 
-export const deleteProduct = async ({ params, response }: { params: { id: string }; response: any }) => {
+export const deleteProduct = async ({ params, response, request }: { params: { id: string }; response: any; request: any }) => {
   try {
     const productObj = await connectDb();
-    const product = await productObj.deleteOne({ _id: { $oid: params.id } });
+    const deletedProduct = await productObj.findOne({ _id: { $oid: params.id } }) ;
+    await productObj.deleteOne({ _id: { $oid: params.id } });
 
     response.status = 200
     response.body = {
       success: true,
-      data: await product
+      data: await deletedProduct
     }
   } catch (error) {
     response.status = 404;

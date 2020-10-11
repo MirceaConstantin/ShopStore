@@ -1,6 +1,6 @@
 import { Application, Context } from "https://deno.land/x/oak/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
-import router from "./routes/routes.ts";
+import router from "./core/routes/routes.ts";
 
 const port = Number(config().PORT);
 const app = new Application();
