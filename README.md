@@ -14,7 +14,7 @@
 
 ### v2
   - Rewrite the backend with ```Deno```
-  - Rewrite the frontend with ```VueJS```
+  - Rewrite the frontend with ```VueJS``` or ```ReactJS```
 
 ### v1
   - Shopping Store with nodeJS (Express) / Pug Engine / Bootstrap and MongoDB as database.
