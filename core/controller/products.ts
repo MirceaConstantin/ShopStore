@@ -1,18 +1,5 @@
 import { connectDb, checkProduct } from "../utils/index.ts";
-import { Product } from "../interface/types.ts";
-
-export const apiInformation = async ({ response }: { response: any }) => {
-  try {
-    response.status = 200;
-    response.body = "content";
-  } catch (error) {
-    response.status = 500;
-    response.body = {
-      success: false,
-      data: error.toString(),
-    };
-  }
-};
+import { Product } from "../constants/types.ts";
 
 export const getProducts = async ({ response }: { response: any }) => {
   try {
@@ -66,6 +53,8 @@ export const addProduct = async ({ response, request }: { response: any; request
   const product: Product = await body.value;
   try {
     if (await checkProduct(product).length !== 0) {
+  console.log("addProduct", product)
+
       const message = await checkProduct(product);
         response.status = 400
         response.body = {
